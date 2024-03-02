@@ -74,8 +74,32 @@ const acceptFriendsRequest = async (req, res) => {
   }
 };
 
+const deleteFriendById = async (req, res) => {
+  const userId = req.params.id;
+  const friendId = req.params.fid;
+
+  try {
+    if (req.currentUserId !== userId) {
+      res.status(403).json({ error: "Unauthorized request" });
+      return;
+    }
+
+    await Friendship.findOneAndDelete({
+      $or: [
+        { user_id: userId, friend_id: friendId },
+        { user_id: friendId, friend_id: userId },
+      ],
+    });
+    res.status(200).json({ message: "Friend deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+};
+
 module.exports = {
   getFriendsByUserId,
   createFriendsRequest,
   acceptFriendsRequest,
+  deleteFriendById
 };
