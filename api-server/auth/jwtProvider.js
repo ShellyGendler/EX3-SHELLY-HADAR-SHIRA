@@ -1,7 +1,11 @@
+const User = require("../models/User");
+const bcrypt = require("bcryptjs");
+
+
 const jwtProvider =  async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ error: "Authentication failed" });
     }
