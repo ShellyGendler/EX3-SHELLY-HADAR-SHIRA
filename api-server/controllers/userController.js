@@ -1,4 +1,5 @@
 const Friendship = require("../models/Friendship");
+const Post = require("../models/Post");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
@@ -90,9 +91,53 @@ const deleteUserById = async (req, res) => {
   }
 };
 
+const getPostsByUserId = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const isFriends = async (user1, user2) => {
+      const friendship = await Friendship.findOne({
+        $or: [
+          { user_id: user1, friend_id: user2 },
+          { user_id: user2, friend_id: user1 },
+        ],
+        status: "accepted",
+      });
+      return !!friendship;
+    };
+    if (
+      userId === req.currentUserId ||
+      (await isFriends(req.currentUserId, userId))
+    ) {
+      const posts = await Post.find({ user_id: userId });
+      res.status(200).json(posts);
+    } else {
+      res.status(403).json({ message: "Can't access user's posts" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed getting user: " + error.message });
+  }
+};
+
+const createFriendsRequest = async (req, res) => {
+  try {
+    const friendship = new Friendship({
+      user_id: req.currentUserId,
+      friend_id: req.params.id,
+    });
+    const result = await friendship.save();
+    res.status(200).json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed sending request", error: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   getUserById,
   updateUserById,
   deleteUserById,
+  getPostsByUserId,
+  createFriendsRequest,
 };
