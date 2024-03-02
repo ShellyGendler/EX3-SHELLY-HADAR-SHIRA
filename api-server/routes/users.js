@@ -5,15 +5,20 @@ const {
   registerUser,
   getUserById,
   updateUserById,
-  deleteUserById,
-  getPostsByUserId,
-  createNewPost,
+  deleteUserById
+} = require("../controllers/userController");
+
+const {
   createFriendsRequest,
   acceptFriendsRequest,
+  getFriendsByUserId,
+} = require("../controllers/friendsController");
+const {
+  getPostsByUserId,
+  createNewPost,
   deletePostById,
   updatePostById,
-  getFriendsByUserId
-} = require("../controllers/userController");
+} = require("../controllers/postController");
 
 router.get("/:id", verifyToken, getUserById);
 router.put("/:id", verifyToken, updateUserById);
