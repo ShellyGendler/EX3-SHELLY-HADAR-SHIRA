@@ -7,7 +7,8 @@ const {
   updateUserById,
   deleteUserById,
   getPostsByUserId,
-  createFriendsRequest
+  createFriendsRequest,
+  acceptFriendsRequest
 } = require("../controllers/userController");
 
 router.get("/:id", verifyToken, getUserById);
@@ -18,6 +19,7 @@ router.get("/:id/posts", verifyToken, getPostsByUserId);
 // router.post("/:id/posts", verifyToken, deleteUserById);
 
 router.post("/:id/friends", verifyToken, createFriendsRequest);
+router.patch("/:id/friends/:fid", verifyToken, acceptFriendsRequest);
 
 router.post("/", registerUser);
 
