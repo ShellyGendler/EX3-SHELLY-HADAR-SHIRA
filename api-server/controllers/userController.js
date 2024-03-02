@@ -108,7 +108,7 @@ const getPostsByUserId = async (req, res) => {
       userId === req.currentUserId ||
       (await isFriends(req.currentUserId, userId))
     ) {
-      const posts = await Post.find({ user_id: userId });
+      const posts = await Post.find({ user_id: userId }).sort({ created_at: -1 });
       res.status(200).json(posts);
     } else {
       res.status(403).json({ message: "Can't access user's posts" });
@@ -133,6 +133,25 @@ const createFriendsRequest = async (req, res) => {
   }
 };
 
+const acceptFriendsRequest = async (req, res) => {
+  try {
+    if (req.currentUserId !== req.params.id) {
+      res.status(403).json({ error: "Unauthorized request" });
+      return;
+    }
+    const friendship = await Friendship.findOneAndUpdate(
+      { user_id: req.params.fid, friend_id: req.params.id, status: "pending" },
+      { status: "accepted" },
+      { new: true }
+    );
+    res.status(200).json(friendship);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed sending request", error: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   getUserById,
@@ -140,4 +159,5 @@ module.exports = {
   deleteUserById,
   getPostsByUserId,
   createFriendsRequest,
+  acceptFriendsRequest
 };
