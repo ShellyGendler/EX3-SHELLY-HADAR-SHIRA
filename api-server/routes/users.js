@@ -5,15 +5,19 @@ const {
   registerUser,
   getUserById,
   updateUserById,
-  deleteUserById
+  deleteUserById,
+  getPostsByUserId,
+  createFriendsRequest
 } = require("../controllers/userController");
 
 router.get("/:id", verifyToken, getUserById);
 router.put("/:id", verifyToken, updateUserById);
 router.delete("/:id", verifyToken, deleteUserById);
 
-// router.get("/:id/posts", verifyToken, deleteUserById);
+router.get("/:id/posts", verifyToken, getPostsByUserId);
 // router.post("/:id/posts", verifyToken, deleteUserById);
+
+router.post("/:id/friends", verifyToken, createFriendsRequest);
 
 router.post("/", registerUser);
 

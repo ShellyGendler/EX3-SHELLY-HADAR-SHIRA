@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const CommentSchema = new Schema({
+const CommentSchema = new mongoose.Schema({
   user_id: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
   content: {
