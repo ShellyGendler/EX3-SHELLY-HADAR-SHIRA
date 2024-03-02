@@ -17,7 +17,11 @@ const PostSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  title:{ type: String, required: true },
+  label: { type: String },
+  imageUrl: {type:String}, 
   content: { type: String, required: true },
+  description: { type: String },
   created_at: { type: Date, default: Date.now },
   likes_count: { type: Number, default: 0 },
   comments: [CommentSchema]
