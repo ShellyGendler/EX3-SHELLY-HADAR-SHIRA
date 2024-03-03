@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// Define Friendship Schema
 const friendshipSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -15,7 +14,6 @@ const friendshipSchema = new mongoose.Schema({
   status: { type: String, enum: ["pending", "accepted"], default: "pending" },
 });
 
-// Create Friendship model
 const Friendship = mongoose.model("Friendship", friendshipSchema);
 
 module.exports = Friendship;

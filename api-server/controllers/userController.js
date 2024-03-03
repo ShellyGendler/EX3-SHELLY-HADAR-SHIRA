@@ -69,7 +69,7 @@ const updateUserById = async (req, res) => {
 };
 
 const deleteUserById = async (req, res) => {
-  const userId = req.params.userId;
+  const userId = req.params.id;
 
   try {
     const user = await User.findById(userId);
@@ -90,6 +90,8 @@ const deleteUserById = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
+
+//////////////////////////////////////////////
 
 const getPostsByUserId = async (req, res) => {
   try {
@@ -139,6 +141,98 @@ const createNewPost = async (req, res) => {
   }
 };
 
+const updatePostById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const postId = req.params.pid;
+    const updatedProps = req.body;
+
+    if (req.currentUserId !== userId) {
+      res.status(403).json({ error: "Unauthorized request" });
+      return;
+    }
+    const updatedPost = await Post.findOneAndUpdate(
+      { _id: postId },
+      updatedProps,
+      { new: true }
+    );
+
+    if (!updatedPost) {
+      res.status(500).json({ message: "Post not found" });
+    }
+
+    res.status(201).json(updatedPost);
+  } catch (error) {
+    res.status(500).json({ error: "Failed getting user: " + error.message });
+  }
+};
+
+const deletePostById = async (req, res) => {
+  const userId = req.params.id;
+  const postId = req.params.pid;
+
+  try {
+    if (req.currentUserId !== userId) {
+      res.status(403).json({ error: "Unauthorized request" });
+      return;
+    }
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    await Post.findByIdAndDelete(postId);
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+};
+
+//////////////////////////////////////////////
+
+const getFriendsByUserId = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const isFriends = async (user1, user2) => {
+      const friendship = await Friendship.findOne({
+        $or: [
+          { user_id: user1, friend_id: user2 },
+          { user_id: user2, friend_id: user1 },
+        ],
+        status: "accepted",
+      });
+      return !!friendship;
+    };
+    if (
+      userId === req.currentUserId ||
+      (await isFriends(req.currentUserId, userId))
+    ) {
+      const friendships = await Friendship.find({
+        $or: [{ user_id: userId }, { friend_id: userId }],
+        status: "accepted",
+      }).populate([
+        { path: "friend_id", select: ["first_name", "last_name", "email"] },
+        { path: "user_id", select: ["first_name", "last_name", "email"] },
+      ]);
+
+      const formatted = friendships.map((friendship) =>
+        friendship.user_id.id === userId
+          ? friendship.friend_id
+          : friendship.user_id
+      );
+
+      res.status(200).json(formatted);
+    } else {
+      res.status(403).json({ message: "Can't access user's friendships" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed getting user: " + error.message });
+  }
+};
+
 const createFriendsRequest = async (req, res) => {
   try {
     const friendship = new Friendship({
@@ -180,6 +274,9 @@ module.exports = {
   deleteUserById,
   getPostsByUserId,
   createNewPost,
+  updatePostById,
+  deletePostById,
+  getFriendsByUserId,
   createFriendsRequest,
   acceptFriendsRequest,
 };
