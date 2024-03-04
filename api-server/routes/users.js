@@ -12,6 +12,7 @@ const {
   createFriendsRequest,
   acceptFriendsRequest,
   getFriendsByUserId,
+  deleteFriendById
 } = require("../controllers/friendsController");
 const {
   getPostsByUserId,
@@ -32,6 +33,7 @@ router.delete("/:id/posts/:pid", verifyToken, deletePostById);
 router.get("/:id/friends", verifyToken, getFriendsByUserId);
 router.post("/:id/friends", verifyToken, createFriendsRequest);
 router.patch("/:id/friends/:fid", verifyToken, acceptFriendsRequest);
+router.delete("/:id/friends/:fid", verifyToken, deleteFriendById);
 
 router.post("/", registerUser);
 
