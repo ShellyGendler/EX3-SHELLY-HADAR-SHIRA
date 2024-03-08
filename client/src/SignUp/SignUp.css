@@ -1,0 +1,37 @@
+
+.center {
+  display: flex;
+  justify-content: 'center';
+  align-items: 'center';
+}
+
+input[type="submit"] {
+    box-sizing: border-box;
+    font-size: 5;
+    background-color: white;
+    color: grey;
+    border-color: grey;
+ } 
+
+input[type="text"] {
+    box-sizing: border-box;
+  }
+  input[type=text]{
+    border-radius:5px;
+  }
+
+  form {
+    width: 100%;
+    font-size: 28px;
+    font-family: sans-serif;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;   */
+    padding: 16px 16px;
+    margin: 16px 4;
+    box-sizing: border-box;
+  }
+
+  ::placeholder {
+    text-align: center; 
+    font: 1.25rem/3 sans-serif;
+ }
+
