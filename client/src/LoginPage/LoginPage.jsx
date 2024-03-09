@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import SignUp from "../SignUp/SignUp";
 import { InputValidation } from "../SignUp/utils";
 import { Modal, Button } from "react-bootstrap";
-import axios from "axios";
 
 function LoginPage() {
     // the modal which is signup page should be shown only by clicking sign up
@@ -47,9 +46,14 @@ function LoginPage() {
         // If input is valid, proceed with form submission
         if (isValid) {
             try {
-                const res = await axios.post("http://localhost:3000/api/users", { email: email, first_name: firstName, last_name: lastName, password: password });
+                const res = await fetch("http://localhost:3000/api/users", {
+                    method: "post",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: email, first_name: firstName, last_name: lastName, password: password }),
+                });
+                const resBody = await res.json();
                 if (res.status !== 201) {
-                    alert("Failed registration: " + res.data);
+                    alert("Failed registration: " + resBody.message);
                     return;
                 }
                 setFinalPic(pic);
@@ -58,10 +62,7 @@ function LoginPage() {
                 navigate("/login"); // Navigate to the LoginPage
                 alert("Signed up successfully");
             } catch (err) {
-                if (err.response.status) {
-                    alert(err.response.data.message);
-                    return;
-                }
+                alert("An error occured");
                 console.log(err);
             }
         }
@@ -89,28 +90,25 @@ function LoginPage() {
     const handleLoginSubmit = async (event) => {
         // check if email and password are equal to email and password in signin page
         event.preventDefault();
-        const signUpEmail = inputs.email;
-        const signUpPassword = inputs.password;
-        const loginEmail = loginInput.email;
-        const loginPassword = loginInput.password;
 
         try {
-            const res = await axios.post("http://localhost:3000/api/tokens", { email: loginInput.email, password: loginInput.password });
-
+            const res = await fetch("http://localhost:3000/api/tokens", {
+                method: "post",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: loginInput.email, password: loginInput.password }),
+            });
+            const resBody = await res.json();
             if (res.status !== 200) {
                 localStorage.setItem("authenticated", false);
-                alert(res.data.error);
+                alert(resBody.error);
                 return;
             }
             localStorage.setItem("authenticated", true);
-            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("token", resBody.token);
             navigate("/feed");
         } catch (err) {
             localStorage.setItem("authenticated", false);
-            if (err.response.status === 401) {
-                alert(err.response.data.error);
-                return;
-            }
+            alert("An error occured");
             console.log(err);
         }
     };
