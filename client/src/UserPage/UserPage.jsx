@@ -1,101 +1,149 @@
+import React, { useEffect, useState } from "react";
 import Post from "../FeedPage/Post.jsx";
 import FeedPage from "../FeedPage/FeedPage.jsx";
+import { useParams } from "react-router-dom";
 
-const token = localStorage.getItem("token");
-
-const user = {
-    userId: "1223",
-    firstName: "Danielle",
-    lastName: "Kupitman",
-    userName: "daniellekup",
-    email: "danielle@gmail.com",
-    password: "dk123456",
-    passwordAuth: "dk123456",
-};
-function UserPage({ userId, friends }) {
-    // const user = await axios.get(http://localhost:3000/${userId}, { userId: userId })
+function UserPage() {
     const isFriend = true;
     const friendId = "12345";
+    const { userId } = useParams();
+    const [userDetails, setUserDetails] = useState();
+    const [posts, setPosts] = useState([]);
+    const [friends, setFriends] = useState([]);
 
-    // const allPosts = axios.post(http://localhost:3000/${userId}/posts, { userId: userId });
+    useEffect(() => {
+        const fetchDetails = async () => {
+            try {
+                const res = await fetch(`http://localhost:3000/api/users/${userId}`, {
+                    method: "GET",
+                    headers: {
+                        Authorization: localStorage.getItem("token"),
+                        "Content-Type": "application/json",
+                    },
+                });
+                if (res.status !== 201) {
+                    alert("Failed fetch details for user");
+                    return;
+                }
+                const resBody = await res.json();
+                setUserDetails(resBody);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        const fetchFriends = async () => {
+            try {
+                const res = await fetch(`http://localhost:3000/api/users/${userId}/friends`, {
+                    method: "GET",
+                    headers: {
+                        Authorization: localStorage.getItem("token"),
+                        "Content-Type": "application/json",
+                    },
+                });
+                if (res.status !== 200) {
+                    alert("Failed fetch friends for user");
+                    return;
+                }
+                const resBody = await res.json();
+                setFriends(resBody);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        const fetchPosts = async () => {
+            try {
+                const res = await fetch(`http://localhost:3000/api/users/${userId}/posts`, {
+                    method: "GET",
+                    headers: {
+                        Authorization: localStorage.getItem("token"),
+                        "Content-Type": "application/json",
+                    },
+                });
+                if (res.status !== 200) {
+                    alert("Failed fetch posts for user");
+                    return;
+                }
+                const resBody = await res.json();
+                setPosts(resBody);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchDetails();
+        fetchFriends();
+        fetchPosts();
+    }, []);
 
     const handleRemoveFriend = async (friendId) => {
-        const postData = {
-            userId: userId,
-            friendId: friendId,
-        };
         const res = await fetch(`http://localhost:3000/api/users/${userId}/friends/${friendId}`, {
             method: "DELETE",
             headers: {
                 "Content-type": "application/json",
                 Authorization: localStorage.getItem("token"),
             },
-            body: JSON.stringify(postData),
         });
-        const resBody = await res.json();
         if (res.status !== 200) {
-            alert(res.status.error);
+            const resBody = await res.json();
+            alert(resBody.message);
             return;
         }
         alert(`friend with id ${friendId} was removed from ${userId}`);
     };
 
-    const handleAddFriend = async () => {
-        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends}`, {
+    const handleAddFriend = async (friendId) => {
+        const res = await fetch(`http://localhost:3000/api/users/${friendId}/friends}`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
                 Authorization: localStorage.getItem("token"),
             },
-            body: JSON.stringify(postData),
+            body: JSON.stringify({ currentUserId: userId }),
         });
         if (res.status !== 200) {
-            alert(res.status.error);
+            const resBody = await res.json();
+            alert(resBody.message);
             return;
         }
-        alert(`friend with id ${userId} was added`);
+        alert(`friend with id ${friendId} was added`);
     };
 
     return (
         <div className="user-page">
-            {user && user.userId && (
+            {userDetails && userDetails.user && (
                 <>
                     <h2>
-                        {user.firstName} {user.lastName}
+                        {userDetails.user.first_name} {userDetails.user.last_name}
                     </h2>
                     <div>
-                        <span>Username: {user.userName}</span>
-                        <span>Email: {user.email}</span>
+                        <span>Email: {userDetails.user.email}</span>
                     </div>
                     <div>
-                        {isFriend ? ( // TODO: check that the user's page is not mine and then check if a friend or not
-                            <button onClick={() => handleRemoveFriend(friendId)}>Remove Friend</button>
-                        ) : (
-                            <button onClick={() => handleAddFriend()}>Add Friend</button>
-                        )}
+                        {userDetails.friendshipStatus && userDetails.friendshipStatus.status === "pending" && <button onClick={() => handleAddFriend(friendId)}>Add Friend</button>}
+                        {userDetails.friendshipStatus && userDetails.friendshipStatus.status === "accepted" && <button onClick={() => handleRemoveFriend(friendId)}>Remove Friend</button>}
                     </div>
                     <h3>Posts</h3>
-                    {/* {allPosts.map((post, index) => (
-                    <Post
-                        key={index}
-                        authorImageSrc={post.authorImageSrc}
-                        authorName={post.authorName}
-                        timeStamp={post.timeStamp}
-                        comments={post.comments ? post.comments : []}
-                        postBody={post.postBody}
-                        postImageSrc={post.postImageSrc}
-                        label={post.label}
-                        postTitle={post.postTitle}
-                        postDescription={post.postDescription}
-                        emojisCount={post.emojisCount}
-                        commentsCount={post.commentsCount}
-                        isLiked={post.isLiked}
-                        isCommented={post.isCommented}
-                        sharesCount={post.sharesCount}
-                        onLike={() => FeedPage.handleLike(index)}
-                        onShare={() => FeedPage.handleShare(index)}
-                        onComment={(comment) => FeedPage.handleComment(index, comment)}
-                    />))} */}
+                    {posts.map((post, index) => (
+                        <Post
+                            key={index}
+                            authorImageSrc={post.author_image}
+                            authorName={post.author_name}
+                            timeStamp={post.created_at}
+                            comments={post.comments ? post.comments : []}
+                            postBody={post.content}
+                            postImageSrc={post.post_image_url}
+                            label={post.label}
+                            postTitle={post.title}
+                            postDescription={post.description}
+                            emojisCount={post.likes_count}
+                            commentsCount={post.comments.length}
+                            isLiked={post.isLiked}
+                            isCommented={post.isCommented}
+                            sharesCount={post.share_count}
+                            onLike={() => FeedPage.handleLike(index)}
+                            onShare={() => FeedPage.handleShare(index)}
+                            onComment={(comment) => FeedPage.handleComment(index, comment)}
+                        />
+                    ))}
                 </>
             )}
         </div>

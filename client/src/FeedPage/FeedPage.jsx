@@ -91,6 +91,7 @@ const FeedPage = () => {
                             posts.map((post, index) => (
                                 <Post
                                     key={index}
+                                    userId={post.user_id}
                                     authorImageSrc={post.author_image}
                                     authorName={post.author_name}
                                     timeStamp={post.created_at}
