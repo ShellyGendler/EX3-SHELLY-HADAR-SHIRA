@@ -24,7 +24,7 @@ const Post = ({ authorImageSrc, authorName, userId, timeStamp, postBody, postIma
         <div className="card post">
             <div className="post-header">
                 <div className="post-author-info">
-                    <img src={authorImageSrc} alt="Author" />
+                    <img src={authorImageSrc} alt="Author" onClick={handleAuthorClick} />
                     <div>
                         <div>
                             <span className="author-name" onClick={handleAuthorClick}>

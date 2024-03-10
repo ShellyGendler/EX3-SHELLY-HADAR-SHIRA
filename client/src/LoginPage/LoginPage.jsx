@@ -49,7 +49,7 @@ function LoginPage() {
                 const res = await fetch("http://localhost:3000/api/users", {
                     method: "post",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email: email, first_name: firstName, last_name: lastName, password: password }),
+                    body: JSON.stringify({ email: email, first_name: firstName, last_name: lastName, password: password, profile_picture: pic }),
                 });
                 const resBody = await res.json();
                 if (res.status !== 201) {

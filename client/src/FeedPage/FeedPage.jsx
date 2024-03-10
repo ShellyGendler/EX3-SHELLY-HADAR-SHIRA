@@ -6,9 +6,6 @@ const FeedPage = () => {
     // State for dark mode
     const [darkMode, setDarkMode] = useState(false);
 
-    // Fetching initial posts from localStorage or a JSON file
-    // const initialPosts = JSON.parse(localStorage.getItem("posts")) || require("./posts.json");
-
     // State for posts
     const [posts, setPosts] = useState([]);
 
