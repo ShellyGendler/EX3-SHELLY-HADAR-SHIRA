@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Post from "./Post.jsx";
+import WritePost from "./WritePost.jsx";
 import "./styles.css";
 
 const FeedPage = () => {
@@ -82,8 +83,8 @@ const FeedPage = () => {
                 </div>
                 <div className="column-left desktop-tablet-only"></div>
                 <div className="column-center">
+                    <WritePost />
                     <div className="content-area">
-                        {/* Rendering posts */}
                         {posts.length > 0 &&
                             posts.map((post, index) => (
                                 <Post

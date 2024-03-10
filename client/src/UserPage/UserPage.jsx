@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Post from "../FeedPage/Post.jsx";
 import FeedPage from "../FeedPage/FeedPage.jsx";
 import { useParams } from "react-router-dom";
+import FriendDetails from "./FriendDetails.jsx";
 
 function UserPage() {
     const isFriend = true;
@@ -125,21 +126,7 @@ function UserPage() {
                             </div>
                             <h3>Friends</h3>
                             {friends ? (
-                                friends.map((friend, index) => (
-                                    <>
-                                        <div className="post-author-info">
-                                            <img src={friend.profile_picture} alt="Author picture" />
-                                            <div>
-                                                <span className="author-name">
-                                                    Name: {friend.first_name} {friend.last_name}
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <span className="author-name">Email: {friend.email}</span>
-                                            </div>
-                                        </div>
-                                    </>
-                                ))
+                                friends.map((friend, index) => <FriendDetails key={friend.email} first_name={friend.first_name} last_name={friend.last_name} email={friend.email} profile_picture={friend.profile_picture} />)
                             ) : (
                                 <div>You are not a friend of {userDetails.user.first_name} and cannot see the friends. </div>
                             )}

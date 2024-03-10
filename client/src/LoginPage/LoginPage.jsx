@@ -105,6 +105,7 @@ function LoginPage() {
             }
             localStorage.setItem("authenticated", true);
             localStorage.setItem("token", resBody.token);
+            localStorage.setItem("userId", resBody.userId);
             navigate("/feed");
         } catch (err) {
             localStorage.setItem("authenticated", false);
@@ -127,7 +128,7 @@ function LoginPage() {
                         <label>
                             {" "}
                             Password should contain both letters and digits - at least 8 and no more than 20
-                            <input class="form-label" style={{ borderRadius: "5px" }} type="email" placeholder="Email" name="email" value={loginInput.email || ""} onChange={handleInputChange} required />
+                            <input className="form-label" style={{ borderRadius: "5px" }} type="email" placeholder="Email" name="email" value={loginInput.email || ""} onChange={handleInputChange} required />
                         </label>
                         <br></br>
                         <label>
@@ -138,23 +139,23 @@ function LoginPage() {
                         </button>
                     </form>
                 </div>
-                <a href="#" className="text-decoration-none text-decoration-center">
+                <a href="/#" className="text-decoration-none text-decoration-center">
                     Forgot password?
                 </a>
                 <br></br>
                 <hr />
                 <div className="new-account-wrapper">
-                    <button class="btn btn-success btn-lg" onClick={clickCreateNewAccount}>
+                    <button className="btn btn-success btn-lg" onClick={clickCreateNewAccount}>
                         Create new account
                     </button>
                 </div>
                 <br></br>
-                <div class="text-center my-5 pb-5">
-                    <p class="fw-bold">
-                        <a href="#" class="text-decoration-none text-dark">
+                <div className="text-center my-5 pb-5">
+                    <p className="fw-bold">
+                        <a href="/#" className="text-decoration-none text-dark">
                             Create a Page for
                         </a>
-                        <span class="fw-normal"> a celebrity, brand or business.</span>
+                        <span className="fw-normal"> a celebrity, brand or business.</span>
                     </p>
                 </div>
             </div>
@@ -163,12 +164,10 @@ function LoginPage() {
             <div className="d-flex align-items-center justify-content-center h-100">
                 <Modal show={showModal} onHide={handleClose} size="lg" centered>
                     <Modal.Header style={{ display: "flex", flexDirection: "column" }}>
-                        <h2 class="modal-title p-5 m-2" id="exampleModalLabel" className="">
+                        <h2 className="modal-title p-5 m-2" id="exampleModalLabel">
                             Create a new account
                         </h2>
-                        <p class="fs-7" className="text-center">
-                            It's quick and easy.
-                        </p>
+                        <p className="fs-7 text-center">It's quick and easy.</p>
                     </Modal.Header>
                     <Modal.Body className="text-center">
                         <SignUp inputs={inputs} handleSignUpSubmit={handleSignUpSubmit} handleSignUpInputChange={handleSignUpInputChange} pic={pic} setPic={setPic} finalPic={finalPic} />

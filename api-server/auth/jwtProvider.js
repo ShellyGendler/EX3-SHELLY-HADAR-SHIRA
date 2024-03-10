@@ -16,7 +16,7 @@ const jwtProvider = async (req, res) => {
         const token = jwt.sign({ userId: user._id }, "your-secret-key", {
             expiresIn: "10h",
         });
-        res.status(200).json({ token });
+        res.status(200).json({ token, userId: user._id });
     } catch (error) {
         res.status(500).json({ error: "Login failed" });
     }
