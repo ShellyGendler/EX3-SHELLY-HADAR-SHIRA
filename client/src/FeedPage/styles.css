@@ -91,12 +91,29 @@
 .post-actions .action i, .post-actions .action span {
     padding: 6px 4px;
 }
-
-
 .post-info-icon, .post-menu-icon {
     width: 20px;
     height: 20px;
     display: inline-block;
+}
+.card.post {
+  position: relative; /* Enable absolute positioning for button */
+}
+
+.remove-post-button {
+  position: absolute;
+  top: 10px; /* Adjust top and right margins as needed */
+  right: 10px;
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.remove-post-button:hover {
+  color: #333;
 }
 .post-actions .actions {
     width: 100%;
@@ -261,4 +278,3 @@ body {
     font-size: 16px;
     color: #ffffff;
   }
-  

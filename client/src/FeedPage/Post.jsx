@@ -4,7 +4,7 @@ import PostActions from "./PostActions";
 import { useNavigate } from "react-router-dom";
 
 // Component representing a single post
-const Post = ({ authorImageSrc, authorName, userId, timeStamp, postBody, postImageSrc, label, postTitle, postDescription, emojisCount, commentsCount, sharesCount, isLiked, isCommented, onLike, comments, onComment, onShare }) => {
+const Post = ({ authorImageSrc, authorName, userId, timeStamp, postBody, postImageSrc, label, postTitle, postDescription, emojisCount, commentsCount, sharesCount, isLiked, isCommented, onLike, comments, onComment, onShare, onDelete }) => {
     const navigate = useNavigate();
 
     const handleAuthorClick = async () => {
@@ -19,6 +19,12 @@ const Post = ({ authorImageSrc, authorName, userId, timeStamp, postBody, postIma
             console.log(err);
         }
     };
+
+    const handleRemovePost = async () => {
+        if (onDelete) {
+            onDelete();
+          }
+    }
 
     return (
         <div className="card post">
@@ -37,6 +43,8 @@ const Post = ({ authorImageSrc, authorName, userId, timeStamp, postBody, postIma
                     </div>
                 </div>
                 <i className="post-menu-icon"></i>
+                <button className="remove-post-button" onClick={handleRemovePost}> X
+                </button>
             </div>
             <p className="post-body">{postBody}</p>
             <a className="post-image" href="#">
