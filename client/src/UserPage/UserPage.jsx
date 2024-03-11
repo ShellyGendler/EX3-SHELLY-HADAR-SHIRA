@@ -74,7 +74,8 @@ function UserPage() {
     }, []);
 
     const handleRemoveFriend = async () => {
-        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends/${userDetails._id}`, {
+        const userId = localStorage.getItem("userId");
+        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends/${userDetails.user._id}`, {
             method: "DELETE",
             headers: {
                 "Content-type": "application/json",
@@ -90,7 +91,7 @@ function UserPage() {
     };
 
     const handleAddFriend = async () => {
-        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends}`, {
+        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",

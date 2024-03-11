@@ -5,8 +5,11 @@ function FriendshipDetails({ friendshipStatus, handleAddFriend, handleRemoveFrie
         <>
             {friendshipStatus ? (
                 <div>
-                    {friendshipStatus.status === "pending" && <button onClick={handleAddFriend}>Add Friend</button>}
-                    {friendshipStatus.status === "accepted" && <button onClick={handleRemoveFriend}>Remove Friend</button>}
+                    {friendshipStatus.status === "pending" && <span>Pending friend request...</span>}
+                    {friendshipStatus.status === "accepted" && <span>You are friends</span>}
+                    <div className="action" onClick={handleRemoveFriend}>
+                        <span>Cancel friendship</span>
+                    </div>
                 </div>
             ) : (
                 <div className="action" onClick={handleAddFriend}>
