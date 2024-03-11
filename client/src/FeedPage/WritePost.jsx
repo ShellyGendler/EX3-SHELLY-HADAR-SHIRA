@@ -83,7 +83,6 @@ const PostForm = () => {
 
     return (
         <div className="post-form">
-            {/* <form onSubmit={onSubmitPost} id="from"> */}
             <input type="text" name="postTitle" placeholder="title" value={postInputs.postTitle} onChange={handleInputChange} />
             <textarea placeholder="What's on your mind?" name="postContent" value={postInputs.postContent} onChange={handleInputChange} />
             <input
@@ -96,22 +95,17 @@ const PostForm = () => {
                         // Get the first selected file
                         const selectedFile = event.target.files[0];
 
-                        // Create a URL for the selected file
-                        // const fileUrl = URL.createObjectURL(selectedFile);
+                        // picture to base64
                         const reader = new FileReader();
                         reader.readAsDataURL(selectedFile);
 
                         reader.onload = () => {
                             handleInputChange({ target: { name: event.target.name, value: reader.result } });
-                            // setPic(reader.result);
                         };
-                        // Call your setPic function with the created URL
-                        // setPic(fileUrl);
                     }
                 }}
             />
             <button onClick={onSubmitPost}>Post</button>
-            {/* </form> */}
         </div>
     );
 };

@@ -6,7 +6,6 @@ import FriendDetails from "./FriendDetails.jsx";
 import FriendshipDetails from "./FriendshipDetails.jsx";
 
 function UserPage() {
-    const isFriend = true;
     const { userId } = useParams();
     const [userDetails, setUserDetails] = useState();
     const [posts, setPosts] = useState();
@@ -104,7 +103,25 @@ function UserPage() {
             alert(resBody.message);
             return;
         }
-        alert(`Sent friendship request to ${userDetails.first_name} successfully`);
+        alert(`Sent friendship request to ${userDetails.user.first_name} successfully`);
+    };
+
+    const handleAcceptFriend = async () => {
+        const userId = localStorage.getItem("userId");
+        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends/${userDetails.user._id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-type": "application/json",
+                Authorization: localStorage.getItem("token"),
+            },
+        });
+        if (res.status !== 200) {
+            const resBody = await res.json();
+            alert(resBody.message);
+            console.log(resBody.error);
+            return;
+        }
+        alert(`Accepted friendship of ${userDetails.user.first_name} successfully`);
     };
 
     return (
@@ -123,7 +140,13 @@ function UserPage() {
                                 <span>Email: {userDetails.user.email}</span>
                             </div>
                             <div>
-                                <FriendshipDetails friendshipStatus={userDetails.friendshipStatus} handleAddFriend={handleAddFriend} handleRemoveFriend={handleRemoveFriend} />
+                                <FriendshipDetails
+                                    friendUserId={userDetails.user._id}
+                                    friendshipStatus={userDetails.friendshipStatus}
+                                    handleAddFriend={handleAddFriend}
+                                    handleRemoveFriend={handleRemoveFriend}
+                                    handleAcceptFriend={handleAcceptFriend}
+                                />
                             </div>
                             <h3>Friends</h3>
                             {friends ? (

@@ -1,11 +1,18 @@
 import React from "react";
 
-function FriendshipDetails({ friendshipStatus, handleAddFriend, handleRemoveFriend }) {
+function FriendshipDetails({ friendUserId, friendshipStatus, handleAddFriend, handleRemoveFriend, handleAcceptFriend }) {
     return (
         <>
             {friendshipStatus ? (
                 <div>
-                    {friendshipStatus.status === "pending" && <span>Pending friend request...</span>}
+                    {friendshipStatus.status === "pending" &&
+                        (friendUserId === friendshipStatus.friend_id ? (
+                            <span>Your friend request is pending...</span>
+                        ) : (
+                            <div className="action" onClick={handleAcceptFriend}>
+                                <span>Accept friendship request</span>
+                            </div>
+                        ))}
                     {friendshipStatus.status === "accepted" && <span>You are friends</span>}
                     <div className="action" onClick={handleRemoveFriend}>
                         <span>Cancel friendship</span>

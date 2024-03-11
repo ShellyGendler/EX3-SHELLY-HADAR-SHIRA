@@ -1,14 +1,8 @@
-import { React, useState } from "react";
+import { React } from "react";
 import "../LoginPage/LoginPage.jsx";
-import { useNavigate } from "react-router-dom";
-
-import { InputValidation } from "./utils.js";
 
 // p at the end of the word for prop
-function SignUp({ inputs, handleSignUpSubmit, handleSignUpInputChange, finalPic, pic, setPic }) {
-    // navigate to LoginPage
-    const navigate = useNavigate();
-
+function SignUp({ inputs, handleSignUpSubmit, handleSignUpInputChange, pic, setPic }) {
     return (
         // When the form is submitted, the handleSubmit function will be called
         <form onSubmit={handleSignUpSubmit} id="form">
@@ -35,19 +29,49 @@ function SignUp({ inputs, handleSignUpSubmit, handleSignUpInputChange, finalPic,
             <div>
                 <label>
                     <br></br>
-                    <input class="form-label" style={{ borderRadius: "5px", width: "300px", height: "50px", textAlign: "center", fontSize: "20px" }} id="lname" type="text" name="lastName" placeholder="Last name" value={inputs.lastName || ""} onChange={handleSignUpInputChange} required />
+                    <input
+                        class="form-label"
+                        style={{ borderRadius: "5px", width: "300px", height: "50px", textAlign: "center", fontSize: "20px" }}
+                        id="lname"
+                        type="text"
+                        name="lastName"
+                        placeholder="Last name"
+                        value={inputs.lastName || ""}
+                        onChange={handleSignUpInputChange}
+                        required
+                    />
                 </label>
             </div>
             <div>
                 <label>
                     <br></br>
-                    <input class="form-label" style={{ borderRadius: "5px", width: "300px", height: "50px", textAlign: "center", fontSize: "20px" }} id="uname" type="text" name="userName" placeholder="User name" value={inputs.userName || ""} onChange={handleSignUpInputChange} required />
+                    <input
+                        class="form-label"
+                        style={{ borderRadius: "5px", width: "300px", height: "50px", textAlign: "center", fontSize: "20px" }}
+                        id="uname"
+                        type="text"
+                        name="userName"
+                        placeholder="User name"
+                        value={inputs.userName || ""}
+                        onChange={handleSignUpInputChange}
+                        required
+                    />
                 </label>
             </div>
             <div>
                 <label>
                     <br></br>
-                    <input class="form-label" style={{ borderRadius: "5px", width: "300px", height: "50px", textAlign: "center", fontSize: "20px" }} id="email" type="email" name="email" placeholder="Email" value={inputs.email || ""} onChange={handleSignUpInputChange} required />
+                    <input
+                        class="form-label"
+                        style={{ borderRadius: "5px", width: "300px", height: "50px", textAlign: "center", fontSize: "20px" }}
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={inputs.email || ""}
+                        onChange={handleSignUpInputChange}
+                        required
+                    />
                 </label>
             </div>
             <div>
@@ -55,7 +79,17 @@ function SignUp({ inputs, handleSignUpSubmit, handleSignUpInputChange, finalPic,
                     {" "}
                     Password should contain both letters and digits - at least 8 and no more than 20
                     <br></br>
-                    <input class="form-label" style={{ borderRadius: "5px", width: "300px", height: "50px", textAlign: "center", fontSize: "20px" }} id="password" type="text" name="password" placeholder="Password" value={inputs.password || ""} onChange={handleSignUpInputChange} required />
+                    <input
+                        class="form-label"
+                        style={{ borderRadius: "5px", width: "300px", height: "50px", textAlign: "center", fontSize: "20px" }}
+                        id="password"
+                        type="text"
+                        name="password"
+                        placeholder="Password"
+                        value={inputs.password || ""}
+                        onChange={handleSignUpInputChange}
+                        required
+                    />
                 </label>
             </div>
             <div>
