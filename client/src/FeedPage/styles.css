@@ -28,6 +28,8 @@
 .post-header {
     justify-content: space-between;
     padding: 12px 16px 0;
+    display: flex;
+    align-items: center;
 }
 .post-author-info, .post-header {
     display: flex;
@@ -278,3 +280,32 @@ body {
     font-size: 16px;
     color: #ffffff;
   }
+
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+  }
+  
+  .post-menu-icon,
+  .remove-post-button {
+    cursor: pointer;
+    /* Add some styling for the existing icons (optional) */
+  }
+  
+  .edit-post-button {
+    background-color: transparent; /* Transparent background for cleaner look */
+    border: none;
+    position: absolute;
+    top: 10px; /* Adjust top and right margins as needed */
+    right: 30px;
+    padding: 5px;
+    cursor: pointer;
+    color: #3897f0; /* Blue color for edit icon */
+  }
+  
+  .edit-post-button:hover {
+    text-decoration: underline; /* Add underline on hover for emphasis */
+  }
+  

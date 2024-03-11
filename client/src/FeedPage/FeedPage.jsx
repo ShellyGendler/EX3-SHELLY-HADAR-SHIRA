@@ -99,6 +99,36 @@ const FeedPage = () => {
         }
       };
 
+      const handleEditPost = async (index, updatedBodyPost) => {
+        try {
+            const post = posts[index];
+            if(post.user_id._id !== localStorage.getItem("userId")){
+                alert("you can only edit your own posts!")
+                return;
+            }
+
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    postBody: updatedBodyPost
+                }),
+            });
+            if (res.status !== 201) {
+                alert(`Failed editing post with id = ${post._id}`);
+                return;
+            }
+            post['content'] = updatedBodyPost;
+            const updatedPosts = [...posts, post];
+            setPosts(updatedPosts);
+        } catch (err) {
+            console.log(err);
+        }
+      };
+
     return (
         <div>
             <div className="content-grid">
@@ -134,6 +164,7 @@ const FeedPage = () => {
                                     onShare={() => handleShare(index)}
                                     onComment={(comment) => handleComment(index, comment)}
                                     onDelete={() => handleRemovePost(index)}
+                                    onEdit={(editedBody) => handleEditPost(index, editedBody)}
                                 />
                             ))}
                     </div>

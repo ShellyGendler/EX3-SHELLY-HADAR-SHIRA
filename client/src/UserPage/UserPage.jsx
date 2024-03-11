@@ -89,8 +89,9 @@ function UserPage() {
             alert(resBody.message);
             return;
         }
-        await fetchDetails();
-        await fetchFriends();
+    
+        const updatedFriends = friends.filter((friend) => friend.id !== userDetails.user._id);
+        setPosts(updatedFriends);
         alert(`Deleted friendship of ${userDetails.first_name} successfully`);
     };
 
@@ -108,8 +109,7 @@ function UserPage() {
             alert(resBody.message);
             return;
         }
-        await fetchDetails();
-        await fetchFriends();
+        
         alert(`Sent friendship request to ${userDetails.first_name} successfully`);
     };
 
