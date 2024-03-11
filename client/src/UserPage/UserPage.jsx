@@ -31,6 +31,7 @@ function UserPage() {
                 console.log(err);
             }
         };
+
         const fetchFriends = async () => {
             try {
                 const res = await fetch(`http://localhost:3000/api/users/${userId}/friends`, {
@@ -67,6 +68,7 @@ function UserPage() {
                 console.log(err);
             }
         };
+
         fetchDetails();
         fetchFriends();
         fetchPosts();
@@ -86,24 +88,10 @@ function UserPage() {
             alert(resBody.message);
             return;
         }
+    
+        const updatedFriends = friends.filter((friend) => friend.id !== userDetails.user._id);
+        setPosts(updatedFriends);
         alert(`Deleted friendship of ${userDetails.first_name} successfully`);
-    };
-
-    const handleAddFriend = async () => {
-        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends`, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-                Authorization: localStorage.getItem("token"),
-            },
-            body: JSON.stringify({ currentUserId: localStorage.getItem("userId") }),
-        });
-        if (res.status !== 200) {
-            const resBody = await res.json();
-            alert(resBody.message);
-            return;
-        }
-        alert(`Sent friendship request to ${userDetails.user.first_name} successfully`);
     };
 
     const handleAcceptFriend = async () => {
@@ -124,6 +112,24 @@ function UserPage() {
         alert(`Accepted friendship of ${userDetails.user.first_name} successfully`);
     };
 
+    const handleAddFriend = async () => {
+        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends`, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                Authorization: localStorage.getItem("token"),
+            },
+            body: JSON.stringify({ currentUserId: localStorage.getItem("userId") }),
+        });
+        if (res.status !== 200) {
+            const resBody = await res.json();
+            alert(resBody.message);
+            return;
+        }
+        
+        alert(`Sent friendship request to ${userDetails.first_name} successfully`);
+    };
+
     return (
         <div className="content-grid">
             <div className="column-left desktop-tablet-only"></div>
@@ -141,12 +147,12 @@ function UserPage() {
                             </div>
                             <div>
                                 <FriendshipDetails
-                                    friendUserId={userDetails.user._id}
-                                    friendshipStatus={userDetails.friendshipStatus}
-                                    handleAddFriend={handleAddFriend}
-                                    handleRemoveFriend={handleRemoveFriend}
-                                    handleAcceptFriend={handleAcceptFriend}
-                                />
+                                        friendUserId={userDetails.user._id}
+                                        friendshipStatus={userDetails.friendshipStatus}
+                                        handleAddFriend={handleAddFriend}
+                                        handleRemoveFriend={handleRemoveFriend}
+                                        handleAcceptFriend={handleAcceptFriend}
+                                    />                            
                             </div>
                             <h3>Friends</h3>
                             {friends ? (
@@ -178,6 +184,8 @@ function UserPage() {
                                         onLike={() => FeedPage.handleLike(index)}
                                         onShare={() => FeedPage.handleShare(index)}
                                         onComment={(comment) => FeedPage.handleComment(index, comment)}
+                                        onDelete={() => FeedPage.handleRemovePost(index)}
+                                        onEdit={(editedBody) => FeedPage.handleEditPost(index, editedBody)}
                                     />
                                 ))
                             ) : (
