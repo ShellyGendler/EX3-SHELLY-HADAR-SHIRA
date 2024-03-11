@@ -43,33 +43,94 @@ const FeedPage = () => {
     }, [darkMode]);
 
     // Function to handle liking a post
-    const handleLike = (index) => {
-        const updatedPosts = [...posts];
-        const post = updatedPosts[index];
+    const handleLike = async (index) => {
+        try {
+            const updatedPosts = [...posts];
+            const post = updatedPosts[index];
 
-        if (post.isLiked) {
-            post.emojisCount -= 1;
-        } else {
-            post.emojisCount += 1;
+            if (post.isLiked) {
+                post.likes_count -= 1;
+            } else {
+                post.likes_count += 1;
+            }
+            post.isLiked = !post.isLiked;
+
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
+                method: "PUT",
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    likes_count: post.likes_count,
+                    isLiked: post.isLiked
+                }),
+            });
+            if (res.status !== 201) {
+                alert(`Failed liking post with id = ${post._id}`);
+                return;
+            }
+            setPosts(updatedPosts);
+        } catch (err) {
+            console.log(err);
         }
-        post.isLiked = !post.isLiked;
-
-        setPosts(updatedPosts);
     };
 
     // Function to handle sharing a post
-    const handleShare = (index) => {
-        const sharedPost = { ...posts[index], authorName: "Shared by You" };
-        setPosts([sharedPost, ...posts]);
+    const handleShare = async (index) => {
+        try {
+            const updatedPosts = [...posts];
+            const post = updatedPosts[index];
+
+            const sharedPost = { ...posts[index], author_name: "Shared by You" };
+
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
+                method: "PUT",
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    author_name: "Shared by You"
+                }),
+            });
+            if (res.status !== 201) {
+                alert(`Failed sharing post with id = ${post._id}`);
+                return;
+            }
+            setPosts([sharedPost, ...posts]);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     // Function to handle commenting on a post
-    const handleComment = (index, comment) => {
-        const updatedPosts = [...posts];
-        updatedPosts[index].commentsCount += 1;
-        updatedPosts[index].comments ? updatedPosts[index].comments.push(comment) : (updatedPosts[index].comments = [comment]);
-        updatedPosts[index].isCommented = true;
-        setPosts(updatedPosts);
+    const handleComment = async (index, comment) => {
+        try {
+            const updatedPosts = [...posts];
+            const post = updatedPosts[index];
+            
+            updatedPosts[index].comments ? updatedPosts[index].comments.push(comment) : (updatedPosts[index].comments = [comment]);
+            updatedPosts[index].isCommented = true; // TODO: currently doenst save to mongo - maybe need to change mongo scheme
+
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
+                method: "PUT",
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    comments: updatedPosts[index].comments
+                }),
+            });
+            if (res.status !== 201) {
+                alert(`Failed commenting post with id = ${post._id}`);
+                return;
+            }
+            setPosts(updatedPosts);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const handleRemovePost = async (index) => {

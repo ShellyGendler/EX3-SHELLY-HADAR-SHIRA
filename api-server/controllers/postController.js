@@ -66,6 +66,23 @@ const updatePostById = async (req, res) => {
     }
 };
 
+const actionOnPostById = async (req, res) => {
+    try {
+        const postId = req.params.pid;
+        const updatedProps = req.body;
+
+        const updatedPost = await Post.findOneAndUpdate({ _id: postId }, updatedProps, { new: true });
+
+        if (!updatedPost) {
+            res.status(500).json({ message: "Post not found" });
+        }
+
+        res.status(201).json(updatedPost);
+    } catch (error) {
+        res.status(500).json({ error: "Failed getting user: " + error.message });
+    }
+};
+
 const deletePostById = async (req, res) => {
     const userId = req.params.id;
     const postId = req.params.pid;
@@ -123,4 +140,5 @@ module.exports = {
     updatePostById,
     deletePostById,
     getFeedPosts,
+    actionOnPostById
 };

@@ -28,6 +28,8 @@ const PostSchema = new mongoose.Schema({
     likes_count: { type: Number, default: 0 },
     share_count: { type: Number, default: 0 },
     comments: [CommentSchema],
+    // is_liked: { type: Boolean, default: false}, TODO
+    // isCommented TODO
 });
 
 const Post = mongoose.model("Post", PostSchema);
