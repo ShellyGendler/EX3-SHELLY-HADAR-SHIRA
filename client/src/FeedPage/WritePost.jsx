@@ -5,6 +5,7 @@ const PostForm = () => {
     const [postInputs, setPostInputs] = useState({
         postTitle: "",
         postContent: "",
+        postImage: "",
     });
 
     useEffect(() => {
@@ -23,7 +24,8 @@ const PostForm = () => {
                     return;
                 }
                 const resBody = await res.json();
-                setUserDetails(resBody);
+                const details = resBody.user;
+                setUserDetails(details);
             } catch (err) {
                 console.log(err);
             }
@@ -40,7 +42,7 @@ const PostForm = () => {
     };
     const handleSubmitPost = async () => {
         try {
-            const res = await fetch("http://localhost:3000/api/posts", {
+            const res = await fetch(`http://localhost:3000/api/users/${userDetails._id}/posts`, {
                 method: "POST",
                 headers: {
                     Authorization: localStorage.getItem("token"),
@@ -51,10 +53,11 @@ const PostForm = () => {
                     author_name: `${userDetails.first_name} ${userDetails.last_name}`,
                     content: postInputs.postContent,
                     title: postInputs.postTitle,
+                    post_image_url: postInputs.postImage,
                 }),
             });
             if (res.status !== 200) {
-                alert("Failed posting");
+                alert("Failed posting: " + res.error);
                 return;
             }
         } catch (err) {
@@ -70,17 +73,44 @@ const PostForm = () => {
         }
         await handleSubmitPost(postInputs);
 
-        setPostInputs((prevInputs) => {
-            prevInputs.postContent = "";
-            prevInputs.postTitle = "";
+        setPostInputs({
+            postTitle: "",
+            postContent: "",
+            postImage: "",
         });
     };
 
     return (
         <div className="post-form">
-            <input type="text" name="postTitle" value={postInputs.postTitle} onChange={handleInputChange} />
+            {/* <form onSubmit={onSubmitPost} id="from"> */}
+            <input type="text" name="postTitle" placeholder="title" value={postInputs.postTitle} onChange={handleInputChange} />
             <textarea placeholder="What's on your mind?" name="postContent" value={postInputs.postContent} onChange={handleInputChange} />
+            <input
+                id="files"
+                type="file"
+                name="postImage"
+                onChange={(event) => {
+                    // Check if files are selected
+                    if (event.target.files.length > 0) {
+                        // Get the first selected file
+                        const selectedFile = event.target.files[0];
+
+                        // Create a URL for the selected file
+                        // const fileUrl = URL.createObjectURL(selectedFile);
+                        const reader = new FileReader();
+                        reader.readAsDataURL(selectedFile);
+
+                        reader.onload = () => {
+                            handleInputChange({ target: { name: event.target.name, value: reader.result } });
+                            // setPic(reader.result);
+                        };
+                        // Call your setPic function with the created URL
+                        // setPic(fileUrl);
+                    }
+                }}
+            />
             <button onClick={onSubmitPost}>Post</button>
+            {/* </form> */}
         </div>
     );
 };

@@ -31,7 +31,6 @@ const FeedPage = () => {
                 }
                 const resBody = await res.json();
                 setPosts(resBody);
-                console.log(posts);
             } catch (err) {
                 console.log(err);
             }

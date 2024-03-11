@@ -3,10 +3,10 @@ import Post from "../FeedPage/Post.jsx";
 import FeedPage from "../FeedPage/FeedPage.jsx";
 import { useParams } from "react-router-dom";
 import FriendDetails from "./FriendDetails.jsx";
+import FriendshipDetails from "./FriendshipDetails.jsx";
 
 function UserPage() {
     const isFriend = true;
-    const friendId = "12345";
     const { userId } = useParams();
     const [userDetails, setUserDetails] = useState();
     const [posts, setPosts] = useState();
@@ -73,8 +73,8 @@ function UserPage() {
         fetchPosts();
     }, []);
 
-    const handleRemoveFriend = async (friendId) => {
-        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends/${friendId}`, {
+    const handleRemoveFriend = async () => {
+        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends/${userDetails._id}`, {
             method: "DELETE",
             headers: {
                 "Content-type": "application/json",
@@ -86,24 +86,24 @@ function UserPage() {
             alert(resBody.message);
             return;
         }
-        alert(`friend with id ${friendId} was removed from ${userId}`);
+        alert(`Deleted friendship of ${userDetails.first_name} successfully`);
     };
 
-    const handleAddFriend = async (friendId) => {
-        const res = await fetch(`http://localhost:3000/api/users/${friendId}/friends}`, {
+    const handleAddFriend = async () => {
+        const res = await fetch(`http://localhost:3000/api/users/${userId}/friends}`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
                 Authorization: localStorage.getItem("token"),
             },
-            body: JSON.stringify({ currentUserId: userId }),
+            body: JSON.stringify({ currentUserId: localStorage.getItem("userId") }),
         });
         if (res.status !== 200) {
             const resBody = await res.json();
             alert(resBody.message);
             return;
         }
-        alert(`friend with id ${friendId} was added`);
+        alert(`Sent friendship request to ${userDetails.first_name} successfully`);
     };
 
     return (
@@ -114,6 +114,7 @@ function UserPage() {
                 <div className="content-area">
                     {userDetails && userDetails.user && (
                         <>
+                            <img src={userDetails.user.profile_picture} style={{ width: 100, height: "auto" }} alt="profile pic" />
                             <h2>
                                 {userDetails.user.first_name} {userDetails.user.last_name}
                             </h2>
@@ -121,12 +122,13 @@ function UserPage() {
                                 <span>Email: {userDetails.user.email}</span>
                             </div>
                             <div>
-                                {userDetails.friendshipStatus && userDetails.friendshipStatus.status === "pending" && <button onClick={() => handleAddFriend(friendId)}>Add Friend</button>}
-                                {userDetails.friendshipStatus && userDetails.friendshipStatus.status === "accepted" && <button onClick={() => handleRemoveFriend(friendId)}>Remove Friend</button>}
+                                <FriendshipDetails friendshipStatus={userDetails.friendshipStatus} handleAddFriend={handleAddFriend} handleRemoveFriend={handleRemoveFriend} />
                             </div>
                             <h3>Friends</h3>
                             {friends ? (
-                                friends.map((friend, index) => <FriendDetails key={friend.email} first_name={friend.first_name} last_name={friend.last_name} email={friend.email} profile_picture={friend.profile_picture} />)
+                                friends.map((friend, index) => (
+                                    <FriendDetails key={friend.email} first_name={friend.first_name} last_name={friend.last_name} email={friend.email} profile_picture={friend.profile_picture} />
+                                ))
                             ) : (
                                 <div>You are not a friend of {userDetails.user.first_name} and cannot see the friends. </div>
                             )}
