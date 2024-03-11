@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./WritePost.css";
 
 const PostForm = () => {
     const [userDetails, setUserDetails] = useState();

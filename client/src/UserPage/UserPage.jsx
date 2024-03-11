@@ -71,7 +71,7 @@ function UserPage() {
         fetchDetails();
         fetchFriends();
         fetchPosts();
-    }, []);
+    }, [userId]);
 
     const handleRemoveFriend = async () => {
         const res = await fetch(`http://localhost:3000/api/users/${userId}/friends/${userDetails._id}`, {
@@ -114,7 +114,7 @@ function UserPage() {
                 <div className="content-area">
                     {userDetails && userDetails.user && (
                         <>
-                            <img src={userDetails.user.profile_picture} style={{ width: 100, height: "auto" }} alt="profile pic" />
+                            <img src={userDetails.user.profile_picture} style={{ width: 100, height: 100, borderRadius: '50%', objectFit: 'cover', }} alt="profile pic" />
                             <h2>
                                 {userDetails.user.first_name} {userDetails.user.last_name}
                             </h2>
@@ -127,7 +127,7 @@ function UserPage() {
                             <h3>Friends</h3>
                             {friends ? (
                                 friends.map((friend, index) => (
-                                    <FriendDetails key={friend.email} first_name={friend.first_name} last_name={friend.last_name} email={friend.email} profile_picture={friend.profile_picture} />
+                                    <FriendDetails key={friend.email} first_name={friend.first_name} last_name={friend.last_name} email={friend.email} profile_picture={friend.profile_picture} friend_id={friend._id} />
                                 ))
                             ) : (
                                 <div>You are not a friend of {userDetails.user.first_name} and cannot see the friends. </div>
