@@ -1,4 +1,5 @@
 import React from "react";
+import "./FriendshipDetails.css"
 
 function FriendshipDetails({ friendUserId, friendshipStatus, handleAddFriend, handleRemoveFriend, handleAcceptFriend }) {
     return (
@@ -9,20 +10,14 @@ function FriendshipDetails({ friendUserId, friendshipStatus, handleAddFriend, ha
                         (friendUserId === friendshipStatus.friend_id ? (
                             <span>Your friend request is pending...</span>
                         ) : (
-                            <div className="action" onClick={handleAcceptFriend}>
-                                <span>Accept friendship request</span>
-                            </div>
-                        ))}
-                    {friendshipStatus.status === "accepted" && <span>You are friends</span>}
-                    <div className="action" onClick={handleRemoveFriend}>
-                        <span>Cancel friendship</span>
-                    </div>
+                             <button className="friendship-reques" onClick={handleAcceptFriend}>Accept friendship request </button>
+                        ))} 
+                    {friendshipStatus.status === "accepted" && <span>You are friends</span>}  
+                    <br/>
+                    <button className="cancel-friendship" onClick={handleRemoveFriend}>Cancel friendship </button>
                 </div>
             ) : (
-                <div className="action" onClick={handleAddFriend}>
-                    <i className="share-icon"></i>
-                    <span>Add Friend</span>
-                </div>
+                <button className="remove-friend" onClick={handleAddFriend}>Add Friend </button>
             )}
         </>
     );

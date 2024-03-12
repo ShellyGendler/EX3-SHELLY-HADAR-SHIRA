@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./FriendDetails.css"
 
 function FriendDetails({ first_name, last_name, email, profile_picture, friend_id }) {
     const navigate = useNavigate();
