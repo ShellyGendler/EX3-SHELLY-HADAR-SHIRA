@@ -172,13 +172,42 @@ a {
     max-width: 680px;
     margin: 16px auto 0;
 }
-.comment-box{
+/* .comment-box{
     width: 100%;
 }
 .comment-area{
     padding: 4px;
     width: 100%;
     height:120px;
+} */
+
+.comment-box {
+  margin-top: 1rem; /* Spacing between actions and comment box */
+  display: flex;
+  flex-direction: column; /* Stack comment area and button */
+}
+
+.comment-area {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px; /* Rounded corners for comment area */
+  resize: none; /* Disable textarea resize */
+  height: 3rem; /* Adjust height as needed */
+}
+
+.comment-area:focus {
+  outline: none; /* Remove default outline on focus */
+  border-color: #ccc; /* Change border color on focus */
+}
+
+.comment-box button {
+  background-color: #3897f0; /* Facebook blue for button */
+  color: #fff; /* White text color */
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px; /* Rounded corners for button */
+  cursor: pointer;
+  margin-top: 0.5rem; /* Spacing between comment area and button */
 }
 
 
