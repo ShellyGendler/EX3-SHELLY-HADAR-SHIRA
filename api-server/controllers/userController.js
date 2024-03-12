@@ -70,7 +70,7 @@ const deleteUserById = async (req, res) => {
         const user = await User.findById(userId);
 
         if (req.currentUserId !== userId) {
-            res.status(403).json({ error: "Unauthorized request" });
+            res.status(403).json({ message: "Unauthorized request" });
             return;
         }
 
@@ -79,6 +79,11 @@ const deleteUserById = async (req, res) => {
         }
 
         await User.findByIdAndDelete(userId);
+
+        await Friendship.find({ $or: [{ user_id: userId }, { friend_id: userId }] }).deleteMany();
+
+        await Post.find({ user_id: userId }).deleteMany();
+
         res.status(200).json({ message: "User deleted successfully" });
     } catch (error) {
         console.error(error);

@@ -1,4 +1,4 @@
-.content-grid{
+.content-grid {
     display: grid;
     grid-template-columns: 1fr minmax(0, 3fr) 1fr;
     column-gap: 32px;
@@ -10,7 +10,7 @@
 }
 .card.post {
     padding: 0;
-    margin-top:24px;
+    margin-top: 24px;
 }
 .share-icon {
     background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/y_/r/MSelyWiUxw1.png");
@@ -21,7 +21,8 @@
     background-repeat: no-repeat;
     display: inline-block;
 }
-.post-author-info, .post-header {
+.post-author-info,
+.post-header {
     display: flex;
     align-items: center;
 }
@@ -31,7 +32,8 @@
     display: flex;
     align-items: center;
 }
-.post-author-info, .post-header {
+.post-author-info,
+.post-header {
     display: flex;
     align-items: center;
 }
@@ -52,7 +54,8 @@
     font-weight: 400;
     line-height: 16px;
 }
-.post-info-icon, .post-menu-icon {
+.post-info-icon,
+.post-menu-icon {
     width: 20px;
     height: 20px;
     display: inline-block;
@@ -90,32 +93,34 @@
     top: 0;
     transform: translateY(-50%);
 }
-.post-actions .action i, .post-actions .action span {
+.post-actions .action i,
+.post-actions .action span {
     padding: 6px 4px;
 }
-.post-info-icon, .post-menu-icon {
+.post-info-icon,
+.post-menu-icon {
     width: 20px;
     height: 20px;
     display: inline-block;
 }
 .card.post {
-  position: relative; /* Enable absolute positioning for button */
+    position: relative; /* Enable absolute positioning for button */
 }
 
 .remove-post-button {
-  position: absolute;
-  top: 10px; /* Adjust top and right margins as needed */
-  right: 10px;
-  padding: 5px;
-  border: none;
-  background-color: transparent;
-  color: #999;
-  cursor: pointer;
-  transition: color 0.2s ease-in-out;
+    position: absolute;
+    top: 10px; /* Adjust top and right margins as needed */
+    right: 10px;
+    padding: 5px;
+    border: none;
+    background-color: transparent;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
 }
 
 .remove-post-button:hover {
-  color: #333;
+    color: #333;
 }
 .post-actions .actions {
     width: 100%;
@@ -129,13 +134,14 @@
     width: 100%;
     padding: 6px 2px;
 }
-.post-actions .action i, .post-actions .action span {
+.post-actions .action i,
+.post-actions .action span {
     padding: 6px 4px;
 }
 .post-reactions .reactions .emojis {
     display: flex;
     flex-direction: row-reverse;
-    gap:4px;
+    gap: 4px;
 }
 .post-reactions .reactions img {
     width: 22px;
@@ -153,8 +159,8 @@ a {
 .post-reactions .comment-share .shares {
     margin-left: 7px;
 }
-.share-comment{
-    display:flex;
+.share-comment {
+    display: flex;
     column-gap: 4px;
 }
 .post-reactions .comment-share span {
@@ -175,155 +181,152 @@ a {
 /* .comment-box{
     width: 100%;
 }
-.comment-area{
+.comment-area {
     padding: 4px;
     width: 100%;
     height:120px;
 } */
 
 .comment-box {
-  margin-top: 1rem; /* Spacing between actions and comment box */
-  display: flex;
-  flex-direction: column; /* Stack comment area and button */
+    margin-top: 1rem; /* Spacing between actions and comment box */
+    display: flex;
+    flex-direction: column; /* Stack comment area and button */
 }
 
 .comment-area {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px; /* Rounded corners for comment area */
-  resize: none; /* Disable textarea resize */
-  height: 3rem; /* Adjust height as needed */
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px; /* Rounded corners for comment area */
+    resize: none; /* Disable textarea resize */
+    height: 3rem; /* Adjust height as needed */
 }
 
 .comment-area:focus {
-  outline: none; /* Remove default outline on focus */
-  border-color: #ccc; /* Change border color on focus */
+    outline: none; /* Remove default outline on focus */
+    border-color: #ccc; /* Change border color on focus */
 }
 
 .comment-box button {
-  background-color: #3897f0; /* Facebook blue for button */
-  color: #fff; /* White text color */
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px; /* Rounded corners for button */
-  cursor: pointer;
-  margin-top: 0.5rem; /* Spacing between comment area and button */
+    background-color: #3897f0; /* Facebook blue for button */
+    color: #fff; /* White text color */
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px; /* Rounded corners for button */
+    cursor: pointer;
+    margin-top: 0.5rem; /* Spacing between comment area and button */
 }
-
 
 body {
     background-color: #f0f0f0;
     color: #333;
-  }
-  
-  .dark-mode body {
+}
+
+.dark-mode body {
     background-color: #333;
     color: #fff;
-  }
-  
-  
-  .dark-mode .content-grid {
+}
+
+.dark-mode .content-grid {
     background-color: #222;
     color: #fff;
-  }
-  
-  .dark-mode-toggle {
+}
+
+.dark-mode-toggle {
     position: fixed;
     top: 20px;
     right: 20px;
     cursor: pointer;
     z-index: 9999;
-  }
-  
-  .dark-mode-toggle i {
+}
+
+.dark-mode-toggle i {
     font-size: 24px;
     color: #fff;
-  }
-  
-  .dark-mode-toggle span {
+}
+
+.dark-mode-toggle span {
     margin-left: 8px;
     font-size: 16px;
     color: #fff;
-  }
-  
+}
 
 .dark-mode body {
     background-color: #1a1a1a;
     color: #ffffff;
-  }
-  
-  .dark-mode .content-grid .column-center .content-area {
+}
+
+.dark-mode .content-grid .column-center .content-area {
     background-color: #2b2b2b;
     color: #ffffff;
-  }
-  
-  .dark-mode .card {
+}
+
+.dark-mode .card {
     background-color: #2b2b2b;
     border-color: #4d4d4d;
     color: #ffffff;
-  }
-  
-  .dark-mode .post-header {
+}
+
+.dark-mode .post-header {
     background-color: #333333;
-  }
-  
-  .dark-mode .post-body {
+}
+
+.dark-mode .post-body {
     background-color: #2b2b2b;
     color: #ffffff;
-  }
-  
-  .dark-mode a {
+}
+
+.dark-mode a {
     color: #6fa2d6;
-  }
-  
-  .dark-mode .post-reactions {
+}
+
+.dark-mode .post-reactions {
     background-color: #333333;
     border-bottom: 1px solid #4d4d4d;
-  }
-  
-  .dark-mode .comment-box {
+}
+
+.dark-mode .comment-box {
     background-color: #2b2b2b;
     color: #ffffff;
-  }
-  
-  .dark-mode .comment-area {
+}
+
+.dark-mode .comment-area {
     background-color: #2b2b2b;
     color: #ffffff;
-  }
-  
-  .dark-mode-toggle {
+}
+
+.dark-mode-toggle {
     position: fixed;
     top: 20px;
     right: 20px;
     cursor: pointer;
     z-index: 9999;
-  }
-  
-  .dark-mode-toggle i {
+}
+
+.dark-mode-toggle i {
     font-size: 24px;
     color: #ffffff;
-  }
-  
-  .dark-mode-toggle span {
+}
+
+.dark-mode-toggle span {
     margin-left: 8px;
     font-size: 16px;
     color: #ffffff;
-  }
+}
 
-  .post-header {
+.post-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 15px;
-  }
-  
-  .post-menu-icon,
-  .remove-post-button {
+}
+
+.post-menu-icon,
+.remove-post-button {
     cursor: pointer;
     /* Add some styling for the existing icons (optional) */
-  }
-  
-  .edit-post-button {
+}
+
+.edit-post-button {
     background-color: transparent; /* Transparent background for cleaner look */
     border: none;
     position: absolute;
@@ -332,13 +335,13 @@ body {
     padding: 5px;
     cursor: pointer;
     color: #3897f0; /* Blue color for edit icon */
-  }
-  
-  .edit-post-button:hover {
+}
+
+.edit-post-button:hover {
     text-decoration: underline; /* Add underline on hover for emphasis */
-  }
-  
-  .profile-image {
+}
+
+.profile-image {
     width: 50px; /* Adjust image size as desired */
     height: 50px; /* Adjust image size as desired */
     border-radius: 50%; /* Ensure rounded image corners */
@@ -348,6 +351,35 @@ body {
     left: 20px;
     cursor: pointer;
     z-index: 9999;
-  }
+}
 
-  
+.remove-user-button {
+    position: absolute;
+    top: 10px; /* Adjust top and right margins as needed */
+    right: 0px;
+    padding: 5px;
+    border: none;
+    background-color: transparent;
+    color: #3897f0;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.remove-user-button:hover {
+    color: #333;
+}
+
+.edit-user-button {
+    background-color: transparent; /* Transparent background for cleaner look */
+    border: none;
+    position: absolute;
+    top: 30px; /* Adjust top and right margins as needed */
+    right: 0px;
+    padding: 5px;
+    cursor: pointer;
+    color: #3897f0; /* Blue color for edit icon */
+}
+
+.edit-user-button:hover {
+    text-decoration: underline; /* Add underline on hover for emphasis */
+}
