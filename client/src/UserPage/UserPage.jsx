@@ -170,7 +170,7 @@ function UserPage() {
                                         authorImageSrc={post.author_image}
                                         authorName={post.author_name}
                                         timeStamp={post.created_at}
-                                        comments={post.comments ? post.comments : []}
+                                        comments={post.comments.content ? post.comments.content : []}
                                         postBody={post.content}
                                         postImageSrc={post.post_image_url}
                                         label={post.label}

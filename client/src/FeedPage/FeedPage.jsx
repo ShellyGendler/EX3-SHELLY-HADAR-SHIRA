@@ -12,7 +12,7 @@ const FeedPage = () => {
     // State for posts
     const [posts, setPosts] = useState([]);
     const userId  = localStorage.getItem('userId')
-    const [userDetails, setUserDetails] = useState();
+    const [userDetails, setUserDetails] = useState({});
 
     // Function to toggle dark mode
     const toggleDarkMode = () => {
@@ -54,7 +54,7 @@ const FeedPage = () => {
                     return;
                 }
                 const resBody = await res.json();
-                setUserDetails(resBody);
+                setUserDetails(resBody.user);
             } catch (err) {
                 console.log(err);
             }
@@ -134,9 +134,10 @@ const FeedPage = () => {
         try {
             const updatedPosts = [...posts];
             const post = updatedPosts[index];
+            const user = userDetails;
+            const newComment = {'user_id': user, 'content': comment}
             
-            updatedPosts[index].comments ? updatedPosts[index].comments.push(comment) : (updatedPosts[index].comments = [comment]);
-            updatedPosts[index].isCommented = true; // TODO: currently doenst save to mongo - maybe need to change mongo scheme to be only array of strings
+            updatedPosts[index].comments ? updatedPosts[index].comments.push(newComment) : (updatedPosts[index].comments = [newComment]);
 
             const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
                 method: "PUT",
@@ -240,7 +241,7 @@ const FeedPage = () => {
                                     authorImageSrc={post.author_image}
                                     authorName={post.author_name}
                                     timeStamp={post.created_at}
-                                    comments={post.comments ? post.comments : []}
+                                    comments={post.comments.content ? post.comments.content : []}
                                     postBody={post.content}
                                     postImageSrc={post.post_image_url}
                                     label={post.label}
