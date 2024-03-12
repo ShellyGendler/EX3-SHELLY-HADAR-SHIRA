@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Post from "./Post.jsx";
 import WritePost from "./WritePost.jsx";
 import "./styles.css";
+import { Link, useParams } from 'react-router-dom';
+
 
 const FeedPage = () => {
     // State for dark mode
@@ -9,6 +11,8 @@ const FeedPage = () => {
 
     // State for posts
     const [posts, setPosts] = useState([]);
+    const userId  = localStorage.getItem('userId')
+    const [userDetails, setUserDetails] = useState();
 
     // Function to toggle dark mode
     const toggleDarkMode = () => {
@@ -35,7 +39,28 @@ const FeedPage = () => {
                 console.log(err);
             }
         };
+
+        const fetchDetails = async () => {
+            try {
+                const res = await fetch(`http://localhost:3000/api/users/${userId}`, {
+                    method: "GET",
+                    headers: {
+                        Authorization: localStorage.getItem("token"),
+                        "Content-Type": "application/json",
+                    },
+                });
+                if (res.status !== 201) {
+                    alert("Failed fetch details for user");
+                    return;
+                }
+                const resBody = await res.json();
+                setUserDetails(resBody);
+            } catch (err) {
+                console.log(err);
+            }
+        };
         fetchData();
+        fetchDetails();
     }, []);
     // Effect to apply dark mode styles
     useEffect(() => {
@@ -111,7 +136,7 @@ const FeedPage = () => {
             const post = updatedPosts[index];
             
             updatedPosts[index].comments ? updatedPosts[index].comments.push(comment) : (updatedPosts[index].comments = [comment]);
-            updatedPosts[index].isCommented = true; // TODO: currently doenst save to mongo - maybe need to change mongo scheme
+            updatedPosts[index].isCommented = true; // TODO: currently doenst save to mongo - maybe need to change mongo scheme to be only array of strings
 
             const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
                 method: "PUT",
@@ -193,15 +218,20 @@ const FeedPage = () => {
     return (
         <div>
             <div className="content-grid">
+                {/* User profile image */} 
+                <div className="user-profile">
+                    <Link to={`/user/${userId}`}> 
+                        {userDetails && userDetails.user && <img src={userDetails.user.profile_picture} alt="User Profile" className="profile-image" />}
+                    </Link>
+                </div>
                 {/* Dark mode toggle button */}
                 <div className="dark-mode-toggle" onClick={toggleDarkMode}>
                     <i className="toggle-icon"></i>
                     <span style={{ color: `${darkMode ? "#FFF" : "#000"}` }}>{darkMode ? "Light Mode" : "Dark Mode"}</span>
                 </div>
-                <div className="column-left desktop-tablet-only"></div>
                 <div className="column-center">
-                    <WritePost />
                     <div className="content-area">
+                        <WritePost />
                         {posts.length > 0 &&
                             posts.map((post, index) => (
                                 <Post

@@ -309,3 +309,16 @@ body {
     text-decoration: underline; /* Add underline on hover for emphasis */
   }
   
+  .profile-image {
+    width: 50px; /* Adjust image size as desired */
+    height: 50px; /* Adjust image size as desired */
+    border-radius: 50%; /* Ensure rounded image corners */
+    position: fixed;
+    cursor: pointer;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    z-index: 9999;
+  }
+
+  
