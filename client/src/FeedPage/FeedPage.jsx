@@ -222,7 +222,7 @@ const FeedPage = () => {
                 {/* User profile image */} 
                 <div className="user-profile">
                     <Link to={`/user/${userId}`}> 
-                        {userDetails && userDetails.user && <img src={userDetails.user.profile_picture} alt="User Profile" className="profile-image" />}
+                        {userDetails && <img src={userDetails.profile_picture} alt="User Profile" className="profile-image" />}
                     </Link>
                 </div>
                 {/* Dark mode toggle button */}
