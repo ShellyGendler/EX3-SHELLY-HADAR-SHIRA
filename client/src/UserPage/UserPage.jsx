@@ -11,6 +11,155 @@ function UserPage() {
     const [posts, setPosts] = useState();
     const [friends, setFriends] = useState();
 
+    // Function to handle liking a post
+    const handleLike = async (index) => {
+        try {
+            const updatedPosts = [...posts];
+            const post = updatedPosts[index];
+
+            if (post.isLiked) {
+                post.likes_count -= 1;
+            } else {
+                post.likes_count += 1;
+            }
+            post.isLiked = !post.isLiked;
+
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
+                method: "PUT",
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    likes_count: post.likes_count,
+                    isLiked: post.isLiked
+                }),
+            });
+            if (res.status !== 201) {
+                alert(`Failed liking post with id = ${post._id}`);
+                return;
+            }
+            setPosts(updatedPosts);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    // Function to handle sharing a post
+    const handleShare = async (index) => {
+        try {
+            const updatedPosts = [...posts];
+            const post = updatedPosts[index];
+
+            const sharedPost = { ...posts[index], author_name: "Shared by You" };
+
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
+                method: "PUT",
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    author_name: "Shared by You"
+                }),
+            });
+            if (res.status !== 201) {
+                alert(`Failed sharing post with id = ${post._id}`);
+                return;
+            }
+            setPosts([sharedPost, ...posts]);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    // Function to handle commenting on a post
+    const handleComment = async (index, comment) => {
+        try {
+            const updatedPosts = [...posts];
+            const post = updatedPosts[index];
+            const user = userDetails.user;
+            const newComment = {'user_id': user, 'content': comment}
+            
+            updatedPosts[index].comments ? updatedPosts[index].comments.push(newComment) : (updatedPosts[index].comments = [newComment]);
+
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
+                method: "PUT",
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    comments: updatedPosts[index].comments
+                }),
+            });
+            if (res.status !== 201) {
+                alert(`Failed commenting post with id = ${post._id}`);
+                return;
+            }
+            setPosts(updatedPosts);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const handleRemovePost = async (index) => {
+        try {
+            const post = posts[index];
+            if(post.user_id._id !== localStorage.getItem("userId")){
+                alert("you can only delete your own posts!")
+                return;
+            }
+
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                    "Content-Type": "application/json",
+                },
+            });
+            if (res.status !== 200) {
+                alert(`Failed removing post with id = ${post._id}`);
+                return;
+            }
+            const updatedPosts = [...posts];
+            updatedPosts.splice(index, 1);
+            setPosts(updatedPosts);
+        } catch (err) {
+            console.log(err);
+        }
+      };
+
+      const handleEditPost = async (index, updatedBodyPost) => {
+        try {
+            const post = posts[index];
+            if(post.user_id._id !== localStorage.getItem("userId")){
+                alert("you can only edit your own posts!")
+                return;
+            }
+
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    postBody: updatedBodyPost
+                }),
+            });
+            if (res.status !== 201) {
+                alert(`Failed editing post with id = ${post._id}`);
+                return;
+            }
+            post['content'] = updatedBodyPost;
+            const updatedPosts = [...posts, post];
+            setPosts(updatedPosts);
+        } catch (err) {
+            console.log(err);
+        }
+      };
+
     useEffect(() => {
         const fetchDetails = async () => {
             try {
@@ -91,7 +240,7 @@ function UserPage() {
     
         const updatedFriends = friends.filter((friend) => friend.id !== userDetails.user._id);
         setPosts(updatedFriends);
-        alert(`Deleted friendship of ${userDetails.first_name} successfully`);
+        alert(`Deleted friendship of ${userDetails.user.first_name} successfully`);
     };
 
     const handleAcceptFriend = async () => {
@@ -127,7 +276,7 @@ function UserPage() {
             return;
         }
         
-        alert(`Sent friendship request to ${userDetails.first_name} successfully`);
+        alert(`Sent friendship request to ${userDetails.user.first_name} successfully`);
     };
 
     return (
@@ -181,11 +330,11 @@ function UserPage() {
                                         isLiked={post.isLiked}
                                         isCommented={post.isCommented}
                                         sharesCount={post.share_count}
-                                        onLike={() => FeedPage.handleLike(index)}
-                                        onShare={() => FeedPage.handleShare(index)}
-                                        onComment={(comment) => FeedPage.handleComment(index, comment)}
-                                        onDelete={() => FeedPage.handleRemovePost(index)}
-                                        onEdit={(editedBody) => FeedPage.handleEditPost(index, editedBody)}
+                                        onLike={() => handleLike(index)}
+                                        onShare={() => handleShare(index)}
+                                        onComment={(comment) => handleComment(index, comment)}
+                                        onDelete={() => handleRemovePost(index)}
+                                        onEdit={(editedBody) => handleEditPost(index, editedBody)}
                                     />
                                 ))
                             ) : (
