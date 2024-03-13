@@ -356,7 +356,7 @@ body {
 .remove-user-button {
     position: absolute;
     top: 10px; /* Adjust top and right margins as needed */
-    right: 0px;
+    right: 25px;
     padding: 5px;
     border: none;
     background-color: transparent;
@@ -366,6 +366,7 @@ body {
 }
 
 .remove-user-button:hover {
+    text-decoration: underline; /* Add underline on hover for emphasis */
     color: #333;
 }
 
@@ -374,7 +375,7 @@ body {
     border: none;
     position: absolute;
     top: 30px; /* Adjust top and right margins as needed */
-    right: 0px;
+    right: 10px;
     padding: 5px;
     cursor: pointer;
     color: #3897f0; /* Blue color for edit icon */
@@ -382,4 +383,5 @@ body {
 
 .edit-user-button:hover {
     text-decoration: underline; /* Add underline on hover for emphasis */
-}
+    color: #333;
+  }
