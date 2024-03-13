@@ -1,0 +1,27 @@
+.friendship-reques,
+.cancel-friendship,
+.remove-friend {
+  background-color: #3897f0; /* Facebook blue for background */
+  color: #fff; /* White text color */
+  padding: 0.5rem 1rem; /* Adjust padding as needed */
+  border: none;
+  border-radius: 5px; /* Rounded corners for buttons */
+  cursor: pointer; /* Indicate interaction */
+  font-weight: bold; /* Bold text for emphasis */
+  margin-right: 0.5rem; /* Add spacing between buttons (optional) */
+}
+
+.cancel-friendship {
+  background-color: #f05252; /* Red background for "Cancel friendship" */
+  color: #fff; /* White text for "Cancel friendship" */
+}
+
+/* Optional hover effect for buttons */
+.friendship-reques:hover,
+.remove-friend:hover {
+  background-color: #307fc1; /* Darken blue slightly on hover */
+}
+
+.cancel-friendship:hover {
+  background-color: #de4545; /* Darken red slightly on hover */
+}

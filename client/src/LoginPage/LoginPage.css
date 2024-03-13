@@ -1,0 +1,71 @@
+
+.login {
+    background-color:#F1F1F1;
+    size: 80px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+
+.faceapp-header-wrapper{
+    display:flex;
+    flex-direction: column;
+    grid-area: 3 / 2 / 7 / 4; 
+    
+}
+
+.faceapp-text {
+    color:#007FFF;
+    font-size: 80px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.connect-with-friends-title {
+    margin-top: 10px;
+    width:100%;
+    /* border:1px solid green; */
+    margin-bottom: 32px;
+    font-size: 20px;
+    text-align: left;
+}
+
+.login-container {
+    /* border: 0.5px solid red; */
+    border-radius: 5px;
+    font-size: 20px;
+    grid-area: 2 / 5 / 7 / 8; 
+    width: 500px;
+    height: 400px;
+    padding: 20px;
+    background-color: white;
+}
+
+.action-button {
+    background-color: #04AA6D; /* Green */
+    border: none;
+    color: white;   
+    margin-top:20px;
+    /* padding: 10px 20px; */
+    padding: 20px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 15px;
+    width:300px;
+}
+
+.celebrity-page-link {
+    grid-area: 8 / 5 / 9 / 8;
+}
+
+/* .button1 {border-radius: 2px;}
+.button2 {border-radius: 4px;}
+.button3 {border-radius: 8px;}
+.button4 {border-radius: 12px;}
+.button5 {border-radius: 50%;} */

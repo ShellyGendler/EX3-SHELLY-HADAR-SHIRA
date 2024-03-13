@@ -1,0 +1,76 @@
+/* General Styles */
+.WritePost {
+    background-color: #fff; /* Light background color */
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 15px; /* Inner padding */
+    margin-bottom: 15px; /* Bottom margin */
+  }
+  
+  .post-form textarea {
+    width: 100%; /* Full width */
+    height: 100px; /* Adjust height as needed */
+    resize: vertical; /* Allow vertical resizing */
+    font-family: inherit; /* Inherit font from parent element */
+    font-size: 16px; /* Set font size */
+    border: 1px solid #ddd; /* Light gray border */
+    outline: none; /* Remove outline on focus */
+  }
+  
+  .post-form .actions {
+    display: flex; /* Arrange elements horizontally */
+    justify-content: space-between; /* Space elements evenly */
+    margin-top: 10px; /* Top margin */
+  }
+  
+  /* Button Styles */
+  .post-form button {
+    background-color: #3897f0; /* Blue background color */
+    color: #fff; /* White text color */
+    padding: 8px 15px; /* Padding */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Indicate clickable element */
+  }
+  
+  .post-form button:hover {
+    background-color: #2e8bff; /* Darken on hover */
+  }
+  
+  /* Optional: Styling for icons within buttons */
+  .post-form button i {
+    margin-right: 5px; /* Add margin between icon and text */
+  }
+  
+  /* Styling for post title input (if applicable) */
+  .post-form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-family: inherit;
+    font-size: 16px;
+  }
+  
+  /* New Styles for Content Border and Title Spacing */
+  .post-form {
+    position: relative; /* Enable relative positioning for content area */
+  }
+  
+  .post-form .content-wrapper {
+    position: absolute; /* Position content area absolutely within post-form */
+    top: 50px; /* Adjust top position for desired title space */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 15px; /* Inner padding for content area */
+    border: 1px solid #ddd; /* Add border to content area */
+    border-top: none; /* Remove top border as post-form already has one */
+    border-radius: 4px; /* Maintain rounded corners for content area */
+  }
+  
+  .post-form textarea {
+    height: calc(100% - 30px); /* Adjust height considering content wrapper padding */
+  }
+  

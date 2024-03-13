@@ -1,0 +1,41 @@
+[
+    {
+        "user_id": "asd@asd.com",
+        "author_image": "/avatars/1.jpeg",
+        "author_name": "John Doe",
+        "created_at": "2024-02-11T12:30:00Z",
+        "content": "This is the content of the first post.",
+        "post_image_url": "https://randomwordgenerator.com/img/picture-generator/57e8d4474a51ae14f1dc8460962e33791c3ad6e04e507440742a7ad19e49cc_640.jpg",
+        "label": "Technology",
+        "title": "Lorem Ipsum Dolor Sit Amet",
+        "description": "Description of the first post.",
+        "likes_count": 25,
+        "share_count": 10
+    },
+    {
+        "user_id": "asd@asd.com",
+        "author_image": "/avatars/2.jpeg",
+        "author_name": "Jane Smith",
+        "created_at": "2024-02-10T15:45:00Z",
+        "content": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one",
+        "post_image_url": "https://randomwordgenerator.com/img/picture-generator/52e8d0414b5bad14f1dc8460962e33791c3ad6e04e5074417d2e72d39748c3_640.jpg",
+        "label": "Travel",
+        "title": "Consectetur Adipiscing Elit",
+        "description": "Description of the second post.",
+        "likes_count": 30,
+        "share_count": 12
+    },
+    {
+        "user_id": "asd@asd.com",
+        "author_image": "/avatars/3.jpeg",
+        "author_name": "Alice Johnson",
+        "created_at": "2024-02-09T18:15:00Z",
+        "content": "This is the content of the third post.",
+        "post_image_url": "https://randomwordgenerator.com/img/picture-generator/52e7dd424c5aa514f1dc8460962e33791c3ad6e04e5074417d2e7ed6964acd_640.jpg",
+        "label": "Food",
+        "title": "Sed Do Eiusmod Tempor",
+        "description": "Description of the third post.",
+        "likes_count": 15,
+        "share_count": 8
+    }
+]
