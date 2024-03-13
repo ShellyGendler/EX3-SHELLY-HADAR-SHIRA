@@ -1,34 +1,33 @@
 .post-author-info {
-    display: flex; /* Arrange elements horizontally */
-    align-items: center; /* Vertically align image and name */
-    padding: 0.5rem 1rem; /* Add some padding */
-    cursor: pointer; /* Indicate clickable element for hover and interaction */
-  }
-  
-  .post-author-info:hover {
-    background-color: #f5f5f5; /* Optional background color change on hover */
-  }
-  
-  .post-author-info img {
-    width: 40px; /* Adjust image width as desired */
-    height: 40px; /* Adjust image height as desired */
-    border-radius: 50%; /* Rounded corners for profile image */
-    margin-right: 1rem; /* Add margin between image and name */
-  }
-  
-  .author-name {
-    font-weight: bold; /* Make names bold for prominence */
-    font-size: 0.8rem; /* Adjust font size as needed */
-    color: #333; /* Text color */
-  }
-  
-  .author-name:hover {
-    text-decoration: underline; /* Optional underline on hover */
-  }
-  
-  .email { /* Assuming you want a separate style for email */
-    font-size: 0.8rem; /* Slightly smaller font for email */
-    color: #aaa; /* Grayish color for email */
-    margin-top: 0.2rem; /* Add some spacing from name */
-  }
-  
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.post-author-info:hover {
+  background-color: #f5f5f5;
+}
+
+.post-author-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.author-name {
+  font-weight: bold;
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.author-name:hover {
+  text-decoration: underline;
+}
+
+.email {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-top: 0.2rem;
+}
