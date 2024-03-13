@@ -148,7 +148,7 @@ function UserPage() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    postBody: updatedBodyPost,
+                    content: updatedBodyPost,
                 }),
             });
             if (res.status !== 201) {
@@ -246,6 +246,7 @@ function UserPage() {
 
         await fetchDetails();
         await fetchFriends();
+        await fetchPosts();
         alert(`Deleted friendship of ${userDetails.user.first_name} successfully`);
     };
 
@@ -266,6 +267,7 @@ function UserPage() {
         }
         await fetchDetails();
         await fetchFriends();
+        await fetchPosts();
         alert(`Accepted friendship of ${userDetails.user.first_name} successfully`);
     };
 

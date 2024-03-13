@@ -11,14 +11,14 @@ services:
         networks:
             - mongodb_network
     api-server:
-      build:
-        context: api-server
-        dockerfile: Dockerfile
-      ports:
-        - "3000:3000"
-      environment:
-        NODE_ENV: development
-        LOCALHOST: host.docker.internal
+        build:
+            context: api-server
+            dockerfile: Dockerfile
+        ports:
+            - "3000:3000"
+        environment:
+            NODE_ENV: development
+            LOCALHOST: host.docker.internal
 
 volumes:
     mongodb_data:

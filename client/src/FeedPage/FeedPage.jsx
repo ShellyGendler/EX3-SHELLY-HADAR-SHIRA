@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Post from "./Post.jsx";
 import WritePost from "./WritePost.jsx";
 import "./styles.css";
-import { Link, useParams } from 'react-router-dom';
-
+import { Link, useParams } from "react-router-dom";
 
 const FeedPage = () => {
     // State for dark mode
@@ -11,7 +10,7 @@ const FeedPage = () => {
 
     // State for posts
     const [posts, setPosts] = useState([]);
-    const userId  = localStorage.getItem('userId')
+    const userId = localStorage.getItem("userId");
     const [userDetails, setUserDetails] = useState({});
 
     // Function to toggle dark mode
@@ -88,7 +87,7 @@ const FeedPage = () => {
                 },
                 body: JSON.stringify({
                     likes_count: post.likes_count,
-                    isLiked: post.isLiked
+                    isLiked: post.isLiked,
                 }),
             });
             if (res.status !== 201) {
@@ -116,7 +115,7 @@ const FeedPage = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    author_name: "Shared by You"
+                    author_name: "Shared by You",
                 }),
             });
             if (res.status !== 201) {
@@ -135,8 +134,8 @@ const FeedPage = () => {
             const updatedPosts = [...posts];
             const post = updatedPosts[index];
             const user = userDetails;
-            const newComment = {'user_id': user, 'content': comment}
-            
+            const newComment = { user_id: user, content: comment };
+
             updatedPosts[index].comments ? updatedPosts[index].comments.push(newComment) : (updatedPosts[index].comments = [newComment]);
 
             const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
@@ -146,7 +145,7 @@ const FeedPage = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    comments: updatedPosts[index].comments
+                    comments: updatedPosts[index].comments,
                 }),
             });
             if (res.status !== 201) {
@@ -162,8 +161,8 @@ const FeedPage = () => {
     const handleRemovePost = async (index) => {
         try {
             const post = posts[index];
-            if(post.user_id._id !== localStorage.getItem("userId")){
-                alert("you can only delete your own posts!")
+            if (post.user_id._id !== localStorage.getItem("userId")) {
+                alert("you can only delete your own posts!");
                 return;
             }
 
@@ -184,13 +183,13 @@ const FeedPage = () => {
         } catch (err) {
             console.log(err);
         }
-      };
+    };
 
-      const handleEditPost = async (index, updatedBodyPost) => {
+    const handleEditPost = async (index, updatedBodyPost) => {
         try {
             const post = posts[index];
-            if(post.user_id._id !== localStorage.getItem("userId")){
-                alert("you can only edit your own posts!")
+            if (post.user_id._id !== localStorage.getItem("userId")) {
+                alert("you can only edit your own posts!");
                 return;
             }
 
@@ -201,29 +200,27 @@ const FeedPage = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    postBody: updatedBodyPost
+                    content: updatedBodyPost,
                 }),
             });
             if (res.status !== 201) {
                 alert(`Failed editing post with id = ${post._id}`);
                 return;
             }
-            post['content'] = updatedBodyPost;
+            post["content"] = updatedBodyPost;
             const updatedPosts = [...posts, post];
             setPosts(updatedPosts);
         } catch (err) {
             console.log(err);
         }
-      };
+    };
 
     return (
         <div>
             <div className="content-grid">
-                {/* User profile image */} 
+                {/* User profile image */}
                 <div className="user-profile">
-                    <Link to={`/user/${userId}`}> 
-                        {userDetails && <img src={userDetails.profile_picture} alt="User Profile" className="profile-image" />}
-                    </Link>
+                    <Link to={`/user/${userId}`}>{userDetails && <img src={userDetails.profile_picture} alt="User Profile" className="profile-image" />}</Link>
                 </div>
                 {/* Dark mode toggle button */}
                 <div className="dark-mode-toggle" onClick={toggleDarkMode}>

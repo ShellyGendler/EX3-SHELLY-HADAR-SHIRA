@@ -92,7 +92,7 @@ const Post = ({
             </div>
             <p className="post-body">{postBody}</p>
             <a className="post-image" href="/#">
-                <img src={postImageSrc} alt="Post" />
+                <img src={postImageSrc} alt="Post" className="post-image" />
             </a>
 
             <PostReactions emojisCount={emojisCount} commentsCount={commentsCount} sharesCount={sharesCount} />
