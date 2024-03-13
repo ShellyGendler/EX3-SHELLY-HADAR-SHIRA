@@ -40,7 +40,6 @@ function LoginPage() {
         event.preventDefault();
         // Accessing input values from the state
         const { firstName, lastName, userName, email, password, passwordAuth } = inputs;
-        // access pic
         // Performing input validation
         const isValid = InputValidation(firstName, lastName, userName, email, password, passwordAuth, pic);
         // If input is valid, proceed with form submission
@@ -128,7 +127,16 @@ function LoginPage() {
                         <label>
                             {" "}
                             Password should contain both letters and digits - at least 8 and no more than 20
-                            <input className="form-label" style={{ borderRadius: "5px" }} type="email" placeholder="Email" name="email" value={loginInput.email || ""} onChange={handleInputChange} required />
+                            <input
+                                className="form-label"
+                                style={{ borderRadius: "5px" }}
+                                type="email"
+                                placeholder="Email"
+                                name="email"
+                                value={loginInput.email || ""}
+                                onChange={handleInputChange}
+                                required
+                            />
                         </label>
                         <br></br>
                         <label>

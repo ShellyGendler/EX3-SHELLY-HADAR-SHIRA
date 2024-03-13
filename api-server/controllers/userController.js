@@ -48,7 +48,7 @@ const updateUserById = async (req, res) => {
         const userId = req.params.id;
         const updatedProps = req.body;
         if (req.currentUserId !== userId) {
-            res.status(403).json({ error: "Unauthorized request" });
+            res.status(403).json({ message: "Unauthorized request" });
             return;
         }
         const updatedUser = await User.findOneAndUpdate({ _id: userId }, updatedProps, { new: true });
@@ -57,9 +57,9 @@ const updateUserById = async (req, res) => {
             res.status(500).json({ message: "User not found" });
         }
 
-        res.status(201).json(updatedUser);
+        res.status(200).json(updatedUser);
     } catch (error) {
-        res.status(500).json({ error: "Failed getting user: " + error.message });
+        res.status(500).json({ message: "Failed getting user: " + error.message });
     }
 };
 

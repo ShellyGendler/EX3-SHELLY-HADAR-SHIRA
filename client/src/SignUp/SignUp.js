@@ -124,17 +124,12 @@ function SignUp({ inputs, handleSignUpSubmit, handleSignUpInputChange, pic, setP
                                 if (event.target.files.length > 0) {
                                     // Get the first selected file
                                     const selectedFile = event.target.files[0];
-
-                                    // Create a URL for the selected file
-                                    // const fileUrl = URL.createObjectURL(selectedFile);
                                     const reader = new FileReader();
                                     reader.readAsDataURL(selectedFile);
 
                                     reader.onload = () => {
                                         setPic(reader.result);
                                     };
-                                    // Call your setPic function with the created URL
-                                    // setPic(fileUrl);
                                 }
                             }}></input>
                     </div>

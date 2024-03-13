@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Post from "../FeedPage/Post.jsx";
-import FeedPage from "../FeedPage/FeedPage.jsx";
 import { useNavigate, useParams } from "react-router-dom";
+import Post from "../FeedPage/Post.jsx";
 import FriendDetails from "./FriendDetails.jsx";
 import FriendshipDetails from "./FriendshipDetails.jsx";
+import EditUserModal from "./EditUserModal.jsx";
 
 function UserPage() {
     const navigate = useNavigate();
@@ -12,6 +12,7 @@ function UserPage() {
     const [userDetails, setUserDetails] = useState();
     const [posts, setPosts] = useState();
     const [friends, setFriends] = useState();
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     // Function to handle liking a post
     const handleLike = async (index) => {
@@ -244,8 +245,7 @@ function UserPage() {
         }
 
         await fetchDetails();
-        // const updatedFriends = friends.filter((friend) => friend.id !== userDetails.user._id);
-        // setPosts(updatedFriends);
+        await fetchFriends();
         alert(`Deleted friendship of ${userDetails.user.first_name} successfully`);
     };
 
@@ -265,6 +265,7 @@ function UserPage() {
             return;
         }
         await fetchDetails();
+        await fetchFriends();
         alert(`Accepted friendship of ${userDetails.user.first_name} successfully`);
     };
 
@@ -283,7 +284,8 @@ function UserPage() {
             return;
         }
         await fetchDetails();
-        alert(`Sent friendship request to ${userDetails.user.user.first_name} successfully`);
+        await fetchFriends();
+        alert(`Sent friendship request to ${userDetails.user.first_name} successfully`);
     };
 
     const handleRemoveUser = async () => {
@@ -301,6 +303,24 @@ function UserPage() {
         }
         navigate("/");
         alert(`User deleted successfully`);
+    };
+
+    const handleEditUser = async ({ firstName, lastName, pic }) => {
+        const res = await fetch(`http://localhost:3000/api/users/${userId}`, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json",
+                Authorization: localStorage.getItem("token"),
+            },
+            body: JSON.stringify({ first_name: firstName, last_name: lastName, profile_picture: pic }),
+        });
+        if (res.status !== 200) {
+            const resBody = await res.json();
+            alert(resBody.message);
+            return;
+        }
+        await fetchDetails();
+        alert(`User Edited successfully`);
     };
 
     return (
@@ -332,22 +352,33 @@ function UserPage() {
                                         <button className="remove-user-button" onClick={handleRemoveUser}>
                                             Delete User
                                         </button>
-                                        <button className="edit-user-button">Edit User Details</button>
+                                        <button className="edit-user-button" onClick={() => setIsEditModalOpen(true)}>
+                                            Edit User Details
+                                        </button>
+                                        {isEditModalOpen && (
+                                            <EditUserModal userDetails={userDetails.user} onEditSubmit={handleEditUser} onClose={() => setIsEditModalOpen(false)} isEditModalOpen={isEditModalOpen} />
+                                        )}
                                     </div>
                                 )}
                             </div>
                             <h3>Friends</h3>
                             {friends ? (
-                                friends.map((friend, index) => (
-                                    <FriendDetails
-                                        key={friend.email}
-                                        first_name={friend.first_name}
-                                        last_name={friend.last_name}
-                                        email={friend.email}
-                                        profile_picture={friend.profile_picture}
-                                        friend_id={friend._id}
-                                    />
-                                ))
+                                <>
+                                    {friends.length > 0 ? (
+                                        friends.map((friend, index) => (
+                                            <FriendDetails
+                                                key={friend.email}
+                                                first_name={friend.first_name}
+                                                last_name={friend.last_name}
+                                                email={friend.email}
+                                                profile_picture={friend.profile_picture}
+                                                friend_id={friend._id}
+                                            />
+                                        ))
+                                    ) : (
+                                        <div>{"You don't have any friends"}</div>
+                                    )}
+                                </>
                             ) : (
                                 <div>You are not a friend of {userDetails.user.first_name} and cannot see the friends. </div>
                             )}

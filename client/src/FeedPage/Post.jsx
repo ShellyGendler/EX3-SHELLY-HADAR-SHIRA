@@ -5,24 +5,45 @@ import React, { useState } from "react";
 import EditPostModal from "./EditPost";
 
 // Component representing a single post
-const Post = ({ authorImageSrc, authorName, userId, timeStamp, postBody, postImageSrc, label, postTitle, postDescription, emojisCount, commentsCount, sharesCount, isLiked, isCommented, onLike, comments, onComment, onShare, onDelete, onEdit }) => {
+const Post = ({
+    authorImageSrc,
+    authorName,
+    userId,
+    timeStamp,
+    postBody,
+    postImageSrc,
+    label,
+    postTitle,
+    postDescription,
+    emojisCount,
+    commentsCount,
+    sharesCount,
+    isLiked,
+    isCommented,
+    onLike,
+    comments,
+    onComment,
+    onShare,
+    onDelete,
+    onEdit,
+}) => {
     const navigate = useNavigate();
     const [isEditModalOpen, setIsEditModalOpen] = useState();
 
     const handleEditClick = () => {
         setIsEditModalOpen(true);
-      };
-    
-      const handleEditSubmit = (editedPostBody) => {
+    };
+
+    const handleEditSubmit = (editedPostBody) => {
         if (onEdit) {
-          onEdit(editedPostBody); 
+            onEdit(editedPostBody);
         }
         setIsEditModalOpen(false);
-      };
-    
-      const handleCloseModal = () => {
+    };
+
+    const handleCloseModal = () => {
         setIsEditModalOpen(false);
-      };
+    };
 
     const handleAuthorClick = async () => {
         try {
@@ -41,7 +62,7 @@ const Post = ({ authorImageSrc, authorName, userId, timeStamp, postBody, postIma
         if (onDelete) {
             onDelete();
         }
-    }
+    };
 
     return (
         <div className="card post">
@@ -60,11 +81,17 @@ const Post = ({ authorImageSrc, authorName, userId, timeStamp, postBody, postIma
                     </div>
                 </div>
                 <i className="post-menu-icon"></i>
-                <button className="remove-post-button" onClick={handleRemovePost}> X </button>
-                <button className="edit-post-button" onClick={handleEditClick}> Edit </button>
+                <button className="remove-post-button" onClick={handleRemovePost}>
+                    {" "}
+                    X{" "}
+                </button>
+                <button className="edit-post-button" onClick={handleEditClick}>
+                    {" "}
+                    Edit{" "}
+                </button>
             </div>
             <p className="post-body">{postBody}</p>
-            <a className="post-image" href="#">
+            <a className="post-image" href="/#">
                 <img src={postImageSrc} alt="Post" />
             </a>
 
@@ -77,7 +104,15 @@ const Post = ({ authorImageSrc, authorName, userId, timeStamp, postBody, postIma
                     ))}
                 </ul>
             </div>
-            <PostActions onLike={onLike} onComment={(newComment) => onComment(newComment)} onShare={onShare} isLiked={isLiked} iscommented={isCommented} commentsCount={commentsCount} sharesCount={sharesCount} />
+            <PostActions
+                onLike={onLike}
+                onComment={(newComment) => onComment(newComment)}
+                onShare={onShare}
+                isLiked={isLiked}
+                iscommented={isCommented}
+                commentsCount={commentsCount}
+                sharesCount={sharesCount}
+            />
             {isEditModalOpen && (
                 <EditPostModal
                     isEditModalOpen={isEditModalOpen}
@@ -86,7 +121,6 @@ const Post = ({ authorImageSrc, authorName, userId, timeStamp, postBody, postIma
                     onClose={handleCloseModal}
                 />
             )}
-
         </div>
     );
 };
