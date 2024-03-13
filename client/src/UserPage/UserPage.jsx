@@ -27,7 +27,7 @@ function UserPage() {
             }
             post.isLiked = !post.isLiked;
 
-            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id}/posts/${post._id}/action`, {
                 method: "PUT",
                 headers: {
                     Authorization: localStorage.getItem("token"),
@@ -56,7 +56,7 @@ function UserPage() {
 
             const sharedPost = { ...posts[index], author_name: "Shared by You" };
 
-            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id}/posts/${post._id}/action`, {
                 method: "PUT",
                 headers: {
                     Authorization: localStorage.getItem("token"),
@@ -86,7 +86,7 @@ function UserPage() {
 
             updatedPosts[index].comments ? updatedPosts[index].comments.push(newComment) : (updatedPosts[index].comments = [newComment]);
 
-            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}/action`, {
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id}/posts/${post._id}/action`, {
                 method: "PUT",
                 headers: {
                     Authorization: localStorage.getItem("token"),
@@ -109,12 +109,12 @@ function UserPage() {
     const handleRemovePost = async (index) => {
         try {
             const post = posts[index];
-            if (post.user_id._id !== localStorage.getItem("userId")) {
+            if (post.user_id !== localStorage.getItem("userId")) {
                 alert("you can only delete your own posts!");
                 return;
             }
 
-            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}`, {
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id}/posts/${post._id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: localStorage.getItem("token"),
@@ -136,12 +136,12 @@ function UserPage() {
     const handleEditPost = async (index, updatedBodyPost) => {
         try {
             const post = posts[index];
-            if (post.user_id._id !== localStorage.getItem("userId")) {
+            if (post.user_id !== localStorage.getItem("userId")) {
                 alert("you can only edit your own posts!");
                 return;
             }
 
-            const res = await fetch(`http://localhost:3000/api/users/${post.user_id._id}/posts/${post._id}`, {
+            const res = await fetch(`http://localhost:3000/api/users/${post.user_id}/posts/${post._id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: localStorage.getItem("token"),
@@ -227,7 +227,7 @@ function UserPage() {
         fetchDetails();
         fetchFriends();
         fetchPosts();
-    }, []);
+    }, [userId]);
 
     const handleRemoveFriend = async () => {
         const userId = localStorage.getItem("userId");
