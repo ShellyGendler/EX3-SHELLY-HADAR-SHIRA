@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const allRoutes = require("./routes");
+const tcpClient = require('./tcpClient');
+
 
 dotenv.config();
 
@@ -23,3 +25,7 @@ const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
+
+setupTcpConnection();
