@@ -58,7 +58,11 @@ const PostForm = () => {
                 }),
             });
             if (res.status !== 200) {
-                alert("Failed posting: " + res.error);
+                if(res.status == 403) {
+                    alert("Post contains invalid URL, please rewrite the post"); 
+                    return
+                }
+                alert("Failed posting: " + res);
                 return;
             }
         } catch (err) {
