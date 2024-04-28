@@ -26,6 +26,22 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
+async function setupTcpConnection() {
+    // Fetch environment variables
+    const bfArrSize = process.env.BF_ARR_SIZE;
+    const hashFuncCount = process.env.HASH_FUNC_COUNT;
+
+    await tcpClient.connectToServer();
+    await tcpClient.sendData(`${bfArrSize} ${hashFuncCount}`);
+    await tcpClient.receiveData();
+
+    //send malicous urls
+    await tcpClient.sendData("1 "+"https://www.facebook.com");
+    await tcpClient.receiveData();
+
+    await tcpClient.sendData("1 "+"https://www.linkedin.com");
+    await tcpClient.receiveData();
+}
 
 
 setupTcpConnection();
