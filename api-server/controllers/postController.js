@@ -1,5 +1,23 @@
+
 const Friendship = require("../models/Friendship");
 const Post = require("../models/Post");
+const tcpClient = require('../tcpClient');
+
+
+
+function extractUrl(text) {
+   // Enhanced Regex to find URLs including those with subdomains or ports
+    // This pattern matches http, https, and ftp URLs more comprehensively
+    const urlRegex = /(\bhttps?:\/\/|ftp:\/\/)[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]/ig;
+
+    // Search for URLs using the regex
+    const urls = text.match(urlRegex);
+    
+    console.log(urls[0]);
+    // Return the first URL found or null if no URL is found
+    return urls ? urls[0] : null;
+}
+
 
 const getPostsByUserId = async (req, res) => {
     try {
@@ -37,6 +55,19 @@ const createNewPost = async (req, res) => {
             ...req.body,
             user_id: req.currentUserId,
         });
+        
+        const url = extractUrl(post.content);
+        if(url != null) {
+            tcpClient.sendData("2 "+url);
+            let response = await tcpClient.receiveData();
+            if(response == "true\n"){
+                console.log(`Post is Illegal, please verify the post and resend it`);
+                res.status(403).json({ error: "Post is Illegal, please verify the post and resend it" });
+                return;
+            }else {
+                    console.log(`Post is OK`);
+            }
+        }
         const result = await post.save();
         res.status(200).json(result);
     } catch (error) {
@@ -54,6 +85,24 @@ const updatePostById = async (req, res) => {
             res.status(403).json({ error: "Unauthorized request" });
             return;
         }
+
+        const url = extractUrl(updatedProps.content);
+        if(url != null) {
+            tcpClient.sendData("2 "+url);
+            let response = await tcpClient.receiveData();
+
+            if(response == "true\n"){
+                console.log(`Post is Illegal, please verify the post and resend it`);
+
+                res.status(403).json({ error: "Post is Illegal, please verify the post and resend it" });
+                return;
+
+            }else {
+                console.log(`Post is OK`);
+
+            }
+        }
+
         const updatedPost = await Post.findOneAndUpdate({ _id: postId }, updatedProps, { new: true });
 
         if (!updatedPost) {
