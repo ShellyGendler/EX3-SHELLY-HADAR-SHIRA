@@ -13,7 +13,6 @@ function extractUrl(text) {
     // Search for URLs using the regex
     const urls = text.match(urlRegex);
     
-    console.log(urls[0]);
     // Return the first URL found or null if no URL is found
     return urls ? urls[0] : null;
 }
