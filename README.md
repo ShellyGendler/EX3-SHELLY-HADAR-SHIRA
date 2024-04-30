@@ -1,3 +1,5 @@
+# link to wiki:
+https://github.com/ShiraKadmon/Ex-4-BF/wiki
 # EX3-SHELLY-HADAR-SHIRA
 How to run the project – api-server + web
 clone the project from git
